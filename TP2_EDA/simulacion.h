@@ -13,8 +13,6 @@
  * ENUMERATIONS AND STRUCTURES AND TYPEDEFS
  ******************************************************************************/
 
-#define SUCIO false
-#define LIMPIO true
 #define MODO1 1
 #define MODO2 2
 
@@ -23,9 +21,11 @@ typedef struct
 {
 	Robot_t* robs;
 	unsigned int robotCount;
-	Baldosa_t* baldosa;
+	Baldosa_t* piso;
 	unsigned int tiempo;
 	unsigned int modo;
+    unsigned int width;
+    unsigned int height;
 
 }Simulacion_t;
 

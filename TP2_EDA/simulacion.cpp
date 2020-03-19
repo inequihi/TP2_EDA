@@ -1,6 +1,5 @@
 #include "simulacion.h"
 /*
-
 Simulacion_t* createSim(unsigned int count, unsigned int height, unsigned int width)
 {
 	//crear robots
