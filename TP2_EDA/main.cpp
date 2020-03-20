@@ -29,13 +29,19 @@ int main(int argc, char** argv)
 	ROBOT_COUNT = 10;
 	modo = 1;
 
+	// CHECKING IF FUNCTIONS WORK AS INTENDED
 	Robot_t* robs = createRobots(ROBOT_COUNT, height, width);
 	printAllRobots(robs, ROBOT_COUNT); //Check robots creation
 
 	Piso_t p;
 	p.balsosas_arr = createFloor(height, width);
 	printFloor(p, height, width); // Check floor creation using getBaldosa
-	
+
+	cout << "Robot " << 0 << " is in (" << robs[0].x << ", " << robs[0].y << ")" << " direction " << robs[0].direccion << endl;
+	moveRobot(&robs[0], width, height);
+	cout << "Moving robot 0..." << endl;
+	cout << "Robot " << 0 << " is in (" << robs[0].x << ", " << robs[0].y << ")" << " direction " << robs[0].direccion << endl;
+
 	if (modo == MODO1)
 	{
 
