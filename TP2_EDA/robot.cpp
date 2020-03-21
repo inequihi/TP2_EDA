@@ -19,6 +19,14 @@ Robot_t* createRobots(unsigned int count, unsigned int height, unsigned int widt
 			robs[var_robots].x = (rand() % width) + ((float) (rand() % 10 ) / 10);
 			robs[var_robots].y = (rand() % height) + ((float)(rand() % 10) / 10);
 			robs[var_robots].direccion = rand() % 360;
+			while (getNextMove('X', robs[var_robots].x, robs[var_robots].direccion) < 0 ||
+				getNextMove('X', robs[var_robots].x, robs[var_robots].direccion) > width ||
+				getNextMove('Y', robs[var_robots].y, robs[var_robots].direccion) < 0 ||
+				getNextMove('Y', robs[var_robots].y, robs[var_robots].direccion) > height
+				)
+			{
+				robs[var_robots].direccion = rand() % 360;
+			}
 		}
 	}
 	return robs;
