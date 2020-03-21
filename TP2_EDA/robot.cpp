@@ -6,7 +6,7 @@
 
 #define PI 3.14159265
 using namespace std;
-int getNextMove(char cord, int val, int direccion);
+float getNextMove(char cord, float val, int direccion);
 
 Robot_t* createRobots(unsigned int count, unsigned int height, unsigned int width)
 {
@@ -16,8 +16,8 @@ Robot_t* createRobots(unsigned int count, unsigned int height, unsigned int widt
 	{
 		for (var_robots = 0; var_robots < count; var_robots++)
 		{
-			robs[var_robots].x = (rand()+1) % (width);
-			robs[var_robots].y = (rand()+1) % (height);
+			robs[var_robots].x = (rand() % width) + ((float) (rand() % 10 ) / 10);
+			robs[var_robots].y = (rand() % height) + ((float)(rand() % 10) / 10);
 			robs[var_robots].direccion = rand() % 360;
 		}
 	}
@@ -40,7 +40,8 @@ void moveRobot(Robot_t* moving_rob, unsigned int width, unsigned int height)
 	*/
 
 	Robot_t robot = *moving_rob;
-	int newX, newY, newDirection;
+	float newX, newY;
+	int newDirection;
 	newX = getNextMove('X', robot.x, robot.direccion);
 	newY = getNextMove('Y', robot.y, robot.direccion);
 	newDirection = rand() % 360;
@@ -52,15 +53,14 @@ void moveRobot(Robot_t* moving_rob, unsigned int width, unsigned int height)
 	{
 		newDirection = rand() % 360;
 	}
-
 	moving_rob->x = newX;
 	moving_rob->y = newY;
 	moving_rob->direccion = newDirection;
 
 }
 
-int getNextMove(char cord, int val, int direccion) {
-	int newX, newY;
+float getNextMove(char cord, float val, int direccion) {
+	float newX, newY;
 	if (cord == 'X') {
 		newX = val + cos(PI * direccion / 180);
 		return newX;

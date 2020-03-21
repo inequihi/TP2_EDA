@@ -12,8 +12,8 @@
 //ROBOT
 typedef struct
 {
-	unsigned int x;
-	unsigned int y;
+    float x;
+	float y;
 	int direccion;
 }Robot_t;
 
