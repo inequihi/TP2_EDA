@@ -63,7 +63,7 @@ bool allegro_init()
 		printf("ERROR INICIALIZANDO ALLEGRO \n");
 	return false;
 }
-
+ 
 void allegro_shut(ALLEGRO_DISPLAY* display)
 {
 	al_shutdown_ttf_addon;
@@ -71,7 +71,7 @@ void allegro_shut(ALLEGRO_DISPLAY* display)
 	al_shutdown_primitives_addon();
 	al_shutdown_image_addon();
 	al_destroy_display(display);
-	free(display);
+
 }
 
 void print_baldosas(ALLEGRO_DISPLAY* display, Piso_t piso, unsigned int width, unsigned int height)
@@ -100,8 +100,6 @@ void graph(int* array, unsigned int max, unsigned int width, unsigned int height
 {
 	al_clear_to_color(al_map_rgb(255, 255, 255));
 	ALLEGRO_FONT* comic_sans;
-	comic_sans = (ALLEGRO_FONT*)malloc(sizeof(ALLEGRO_FONT*));
-
 	comic_sans = set_font(30);
 
 	//x axis
@@ -127,7 +125,6 @@ void graph(int* array, unsigned int max, unsigned int width, unsigned int height
 		al_draw_line(ORIGENX, ORIGENY + (graph_var * escala), (array[graph_var]) + ORIGENX, ORIGENY + (graph_var * escala), al_map_rgb(128, 0, 128), 1);			//al_draw_line(20, 20, (array[0].cantidad_robots) * (0.1), 20, al_map_rgb(0, 0, 0), 4);
 	}
 	al_flip_display();
-	//free(comic_sans);
 
 }
 

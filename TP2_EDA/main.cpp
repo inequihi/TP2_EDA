@@ -60,7 +60,7 @@ int main(int argc, char** argv)
 		user_display = allegro_create(user_display, width + 5, height);
 		graph(grapharray, max_robottts, width, height, user_display);
 		al_rest(7.0);
-		allegro_shut(user_display);
+		//allegro_shut(user_display);
 		/* /
 		for (i = 1, "A CRITERIO"; i++)
 		{
