@@ -37,15 +37,17 @@ int main(int argc, char** argv)
 	cout << "Moving robot 0..." << endl;
 	cout << "Robot " << 0 << " is in (" << robs[0].x << ", " << robs[0].y << ")" << " direction " << robs[0].direccion << endl;
 	printFloor(p, height, width); // Check Updated baldosa
-
+	graph_t * grapharray= NULL;
 
 	ALLEGRO_DISPLAY* user_display = NULL;
 	user_display = allegro_create(user_display, width, height);
 
 	if (modo == MODO1)
 	{
-		print_baldosas(user_display, p, width, height);
+		//print_baldosas(user_display, p, width, height);
+		graph(grapharray, 450, width, height, user_display);
 		al_rest(7.0);
+
 		//allegro_shut(user_display);
 	}
 	else //MODO 2

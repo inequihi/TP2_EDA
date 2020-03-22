@@ -69,8 +69,8 @@ void allegro_shut(ALLEGRO_DISPLAY* display)
 	al_shutdown_font_addon();
 	al_shutdown_primitives_addon();
 	al_shutdown_image_addon();
+	al_destroy_display(display);
 	free(display);
-
 }
 
 void print_baldosas(ALLEGRO_DISPLAY* display, Piso_t piso, unsigned int width, unsigned int height)
@@ -94,15 +94,33 @@ void print_baldosas(ALLEGRO_DISPLAY* display, Piso_t piso, unsigned int width, u
 }
 
 
-void graph(graph_t array[1000], unsigned int width, unsigned int height, ALLEGRO_DISPLAY* display)
+void graph(graph_t*array, unsigned int max, unsigned int width, unsigned int height, ALLEGRO_DISPLAY* display)
 //Funcion que recibe un arreglo con los 1000 variaciones para robots y el tic correspondiente a cada uno. Estructura se encuentra en simulacion.h
 {
-	al_clear_to_color(al_map_rgb(0, 0, 255));
+	al_clear_to_color(al_map_rgb(255, 255, 255));
+	ALLEGRO_FONT* comic_sans;
+	comic_sans = (ALLEGRO_FONT*)malloc(sizeof(ALLEGRO_FONT*));
 
+	comic_sans = set_font(30);
+
+	//x axis
+	al_draw_line(ORIGENX,ORIGENY, ORIGENX, height*(TAMAÑOBAL*0.95), al_map_rgb(0,0,0), 4);
+
+	//y axis
+	int graph_var;
+	
+	al_draw_textf(comic_sans, al_map_rgb(0, 0, 0), (ORIGENX -TAMAÑOBAL) , ORIGENY, 0, "%u",0 );
+	al_draw_textf(comic_sans, al_map_rgb(0, 0, 0), (ORIGENX -2*TAMAÑOBAL), ORIGENY+ ((height * (TAMAÑOBAL * 0.95))/2)-20, 0, "%u", max/2);
+	al_draw_textf(comic_sans, al_map_rgb(0, 0, 0), (ORIGENX - 2*TAMAÑOBAL), ORIGENY + (height * (TAMAÑOBAL * 0.95))-120, 0, "%u", max );
+
+	al_draw_line(ORIGENX, ORIGENY, width*(TAMAÑOBAL*0.95), ORIGENY, al_map_rgb(255, 0, 0), 4);			//al_draw_line(20, 20, (array[0].cantidad_robots) * (0.1), 20, al_map_rgb(0, 0, 0), 4);
 	//Imprimir arreglo y generar tabla
-
-
 	al_flip_display();
-	al_rest(5.0f);
+	//free(comic_sans);
 
+}
+
+ALLEGRO_FONT* set_font(unsigned int size)
+{
+	return al_load_ttf_font(COMICSANS, size, 0);
 }
