@@ -73,7 +73,7 @@ void moveRobot(Robot_t* moving_rob, unsigned int width, unsigned int height, Pis
 	moving_rob->direccion = newDirection;
 
 	/* Luego de moverme limpio la baldosa */
-	Baldosa_t* b = getBaldosa(p->balsosas_arr, floor(newY), floor(newX), width);
+	Baldosa_t* b = getBaldosa(p->baldosas_arr, floor(newY), floor(newX), width);
 	b->estado = LIMPIO;
 	cout << "TEST IN ROBOTS CPP: " << b->estado << floor(newX) << floor(newY) << endl;
 }

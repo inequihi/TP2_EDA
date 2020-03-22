@@ -11,6 +11,7 @@
 
 #define SUCIO false
 #define LIMPIO true
+#define TAMAÑOBAL 40
 
 //BALDOSA
 typedef struct
@@ -21,7 +22,7 @@ typedef struct
 //PISO
 typedef struct
 {
-	Baldosa_t* balsosas_arr;				//Arreglo de baldosas
+	Baldosa_t* baldosas_arr;				//Arreglo de baldosas
 } Piso_t;
 
 

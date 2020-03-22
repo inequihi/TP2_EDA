@@ -22,5 +22,5 @@ Baldosa_t* getBaldosa(Baldosa_t* pbald, unsigned int col, unsigned int fil, unsi
 
 void freeFloor(Piso_t* p)
 {
-	free(p->balsosas_arr);
+	free(p->baldosas_arr);
 }

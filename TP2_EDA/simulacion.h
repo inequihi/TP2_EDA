@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include "robot.h"
 #include "piso.h"
+
 /*******************************************************************************
  * ENUMERATIONS AND STRUCTURES AND TYPEDEFS
  ******************************************************************************/
@@ -29,11 +30,6 @@ typedef struct
 
 }Simulacion_t;
 
-typedef struct
-{
-    unsigned int timeTaken;
-    unsigned int cantidad_robots;
-}graph_t;
 /*******************************************************************************
  * FUNCTION PROTOTYPES WITH GLOBAL SCOPE
  ******************************************************************************/
