@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-
 Baldosa_t* createFloor(unsigned int height, unsigned int width)
 {
 	unsigned int  var_piso;
@@ -14,7 +13,6 @@ Baldosa_t* createFloor(unsigned int height, unsigned int width)
 	}
 	return baldosa_array;
 }
-
 
 Baldosa_t* getBaldosa(Baldosa_t* pbald, unsigned int fil, unsigned int col)
 {

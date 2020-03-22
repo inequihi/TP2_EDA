@@ -1,4 +1,5 @@
 #include "robot.h"
+#include "piso.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
@@ -19,6 +20,10 @@ Robot_t* createRobots(unsigned int count, unsigned int height, unsigned int widt
 			robs[var_robots].x = (rand() % width) + ((float) (rand() % 10 ) / 10);
 			robs[var_robots].y = (rand() % height) + ((float)(rand() % 10) / 10);
 			robs[var_robots].direccion = rand() % 360;
+
+			/* Asegurarnos que en la siguiente juaga a la inicial no se nos salgan del tablero
+			   Luego de la primer jugada esta condición la valida moveRobot(...) */
+
 			while (getNextMove('X', robs[var_robots].x, robs[var_robots].direccion) < 0 ||
 				getNextMove('X', robs[var_robots].x, robs[var_robots].direccion) > width ||
 				getNextMove('Y', robs[var_robots].y, robs[var_robots].direccion) < 0 ||
@@ -38,21 +43,22 @@ void freeRobots(Robot_t* robs)
 	free(robs);
 }
 
-void moveRobot(Robot_t* moving_rob, unsigned int width, unsigned int height)
+void moveRobot(Robot_t* moving_rob, unsigned int width, unsigned int height, Piso_t *p)
 {
-	/*
-		|
+	/*	|
 		X
 		Se toma el angulo 0 grados en esa vertical e incrementa para la derecha
-		Ej: X-- 90 grados
-	*/
+		Ej: X-- 90 grados */
 
 	Robot_t robot = *moving_rob;
 	float newX, newY;
-	int newDirection;
+	int newDirection = moving_rob->direccion;
 	newX = getNextMove('X', robot.x, robot.direccion);
 	newY = getNextMove('Y', robot.y, robot.direccion);
-	newDirection = rand() % 360;
+
+	/* condicional para cambiar de direccion si estoy por salirme del tablero
+	   sino mantengo la dirección */
+
 	while ( getNextMove('X', newX, newDirection) < 0 ||
 			getNextMove('X', newX, newDirection) > width ||
 			getNextMove('Y', newY, newDirection) < 0 ||
@@ -61,20 +67,26 @@ void moveRobot(Robot_t* moving_rob, unsigned int width, unsigned int height)
 	{
 		newDirection = rand() % 360;
 	}
+
 	moving_rob->x = newX;
 	moving_rob->y = newY;
 	moving_rob->direccion = newDirection;
 
+	/* Luego de moverme limpio la baldosa */
+	Baldosa_t* b = getBaldosa(p->balsosas_arr, floor(newX), floor(newY));
+	int i = floor(newX) * floor(newY);
+	p->balsosas_arr[i].estado = LIMPIO;
+	cout << "TEST IN ROBOTS CPP: " << b->estado << floor(newX) << floor(newY) <<endl;
 }
 
 float getNextMove(char cord, float val, int direccion) {
 	float newX, newY;
 	if (cord == 'X') {
-		newX = val + cos(PI * direccion / 180);
+		newX = val + sin(PI * direccion / 180);
 		return newX;
 	}
 	else {
-		newY = val + sin(PI * direccion / 180);
+		newY = val + cos(PI * direccion / 180);
 		return newY;
 	}
 }

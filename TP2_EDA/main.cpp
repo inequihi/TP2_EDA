@@ -24,8 +24,8 @@ int main(int argc, char** argv)
 	unsigned int tickTemp, i, width, height, modo, ROBOT_COUNT;
 	srand(time(NULL));
 
-	width = 20;
-	height = 20;
+	width = 5;
+	height = 5;
 	ROBOT_COUNT = 10;
 	modo = 1;
 
@@ -38,9 +38,10 @@ int main(int argc, char** argv)
 	printFloor(p, height, width); // Check floor creation using getBaldosa
 
 	cout << "Robot " << 0 << " is in (" << robs[0].x << ", " << robs[0].y << ")" << " direction " << robs[0].direccion << endl;
-	moveRobot(&robs[0], width, height);
+	moveRobot(&robs[0], width, height, &p);
 	cout << "Moving robot 0..." << endl;
 	cout << "Robot " << 0 << " is in (" << robs[0].x << ", " << robs[0].y << ")" << " direction " << robs[0].direccion << endl;
+	printFloor(p, height, width); // Check Updated baldosa
 
 	if (modo == MODO1)
 	{

@@ -4,6 +4,7 @@
 #ifndef ROBOT_H
 #define ROBOT_H
 
+#include "piso.h"
 
 /*******************************************************************************
  * ENUMERATIONS AND STRUCTURES AND TYPEDEFS
@@ -26,5 +27,5 @@ Robot_t* createRobots(unsigned int count, unsigned int height, unsigned int widt
 
 void freeRobots(Robot_t* frobots);
 
-void moveRobot(Robot_t* moving_rob, unsigned int width, unsigned int height);
+void moveRobot(Robot_t* moving_rob, unsigned int width, unsigned int height, Piso_t* p);
 #endif //ROBOT_H
