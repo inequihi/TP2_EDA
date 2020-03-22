@@ -92,13 +92,13 @@ void printAllRobots(Robot_t* robs, int count) {
 
 void printFloor(Piso_t p, unsigned int height, unsigned int width) {
 	// 0 IGUAL SUCIA, 1 LIMPIA
-	int i = 1;
+	int i = 0;
 	for (i; i <width; i++) {
 		// Para da columna
-		int j = 1;
+		int j = 0;
 		for (j; j<height; j++) {
 			// Imprimo la columna
-			cout << getBaldosa(p.balsosas_arr, i, j)->estado << " ";
+			cout << getBaldosa(p.balsosas_arr, i, j, width)->estado << " ";
 		}
 		cout << endl;
 	}

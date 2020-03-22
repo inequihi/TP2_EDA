@@ -31,7 +31,7 @@ typedef struct
 
 Baldosa_t* createFloor(unsigned int height, unsigned int width);
 
-Baldosa_t* getBaldosa(Baldosa_t* pbald, unsigned int fil, unsigned int col);
+Baldosa_t* getBaldosa(Baldosa_t* pbald, unsigned int fil, unsigned int col, unsigned int width);
 
 void freeFloor(Piso_t* p);
 #endif //PISO_H

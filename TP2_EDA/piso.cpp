@@ -14,9 +14,10 @@ Baldosa_t* createFloor(unsigned int height, unsigned int width)
 	return baldosa_array;
 }
 
-Baldosa_t* getBaldosa(Baldosa_t* pbald, unsigned int fil, unsigned int col)
+Baldosa_t* getBaldosa(Baldosa_t* pbald, unsigned int col, unsigned int fil, unsigned int width)
 {
-	return &pbald[fil*col];
+
+	return &pbald[(fil*width) + col];
 }
 
 void freeFloor(Piso_t* p)
