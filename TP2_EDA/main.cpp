@@ -20,10 +20,10 @@ int main(int argc, char** argv)
 
 	width = 30;
 	height = 30;
-	ROBOT_COUNT = 10;
-	modo = 2;
+	ROBOT_COUNT = 1;
+	modo = 1;
 
-	// CHECKING IF FUNCTIONS WORK AS INTENDED
+	/*// CHECKING IF FUNCTIONS WORK AS INTENDED
 	Robot_t* robs = createRobots(ROBOT_COUNT, height, width);
 	printAllRobots(robs, ROBOT_COUNT); //Check robots creation
 
@@ -45,19 +45,31 @@ int main(int argc, char** argv)
 		grapharray[gg] = gg;
 	}
 
+	ALLEGRO_DISPLAY* user_display = NULL;*/
 	ALLEGRO_DISPLAY* user_display = NULL;
 
 	if (modo == MODO1)
 	{
-		user_display = allegro_create(user_display, width, height);
-		print_baldosas(user_display, p, width, height);
-		al_rest(7.0);
+		
+		Simulacion_t* simulation;
+		simulation = createSim(1, height, width, modo);
 
-		//allegro_shut(user_display);
+		
+		
+		
+		
+		
+		user_display = allegro_create(user_display, width, height);
+		print_baldosas(user_display, (*simulation->p), width, height);
+		
+		tickTemp=simulate(simulation);
+		
+		freeSim(simulation);
+		allegro_shut(user_display);
 	}
 	else //MODO 2
 	{
-		user_display = allegro_create(user_display, width + 5, height);
+		/*user_display = allegro_create(user_display, width + 5, height);
 		graph(grapharray, max_robottts, width, height, user_display);
 		al_rest(7.0);
 		//allegro_shut(user_display);

@@ -14,6 +14,24 @@ Baldosa_t* createFloor(unsigned int height, unsigned int width)
 	return baldosa_array;
 }
 
+bool floorIsClean(Piso_t * p,unsigned int width,unsigned int height) {
+	
+	int i, j;
+	bool state = true;
+	
+	for (i = 0; i < width && state; i++) {
+		for (j = 0; j < height && state; j++) {
+
+			if ((getBaldosa(p->baldosas_arr, i, j, width))->estado == SUCIO) {
+				state = false;
+
+			}
+
+		}
+
+	}
+	return state;
+}
 Baldosa_t* getBaldosa(Baldosa_t* pbald, unsigned int col, unsigned int fil, unsigned int width)
 {
 

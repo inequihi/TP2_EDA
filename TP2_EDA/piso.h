@@ -11,7 +11,7 @@
 
 #define SUCIO false
 #define LIMPIO true
-#define TAMAÑOBAL 40
+#define TAMAÑOBAL 20
 
 //BALDOSA
 typedef struct
@@ -35,4 +35,6 @@ Baldosa_t* createFloor(unsigned int height, unsigned int width);
 Baldosa_t* getBaldosa(Baldosa_t* pbald, unsigned int fil, unsigned int col, unsigned int width);
 
 void freeFloor(Piso_t* p);
+
+bool floorIsClean(Piso_t* p, unsigned int width, unsigned int height);
 #endif //PISO_H

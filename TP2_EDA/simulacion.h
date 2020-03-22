@@ -19,10 +19,11 @@
 
 //SIMULACION
 typedef struct
-{
+{   
+    Piso_t* p;
 	Robot_t* robs;
 	unsigned int robotCount;
-	Baldosa_t* piso;
+	
 	unsigned int tiempo;
 	unsigned int modo;
     unsigned int width;
@@ -34,7 +35,7 @@ typedef struct
  * FUNCTION PROTOTYPES WITH GLOBAL SCOPE
  ******************************************************************************/
 
-Simulacion_t* createSim(unsigned int count, unsigned int height, unsigned int width);
+Simulacion_t* createSim(unsigned int count, unsigned int height, unsigned int width, unsigned int MODE);
 
 void freeSim(Simulacion_t* psim);
 
