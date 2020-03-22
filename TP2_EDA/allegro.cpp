@@ -9,6 +9,7 @@ ALLEGRO_DISPLAY* allegro_create(ALLEGRO_DISPLAY* display, unsigned int width, un
 		if (!allegro_init())
 		{
 			printf("ERROR INICIALIZANDO ALLEGRO \n");
+			return NULL;
 		}
 
 		display = al_create_display(TAMAÑOBAL * width, TAMAÑOBAL * height);
@@ -23,7 +24,7 @@ ALLEGRO_DISPLAY* allegro_create(ALLEGRO_DISPLAY* display, unsigned int width, un
 
 }
 
-bool allegro_init() 
+bool allegro_init()
 {
 	if (al_init())
 	{
@@ -41,19 +42,19 @@ bool allegro_init()
 						}
 						else
 							printf("ERROR INICIALIZANDO IMAGE ADDON");
-							al_shutdown_image_addon();
+						al_shutdown_image_addon();
 					}
 					else
 						printf("ERROR INICIALIZANDO TTF ADDON");
-						al_shutdown_ttf_addon;
+					al_shutdown_ttf_addon;
 				}
 				else
 					printf("ERROR INICIALIZANDO FONT ADDON");
-					al_shutdown_font_addon();
+				al_shutdown_font_addon();
 			}
 			else
 				printf("ERROR INSTALANDO TECLADO\n");
-				al_shutdown_primitives_addon();
+			al_shutdown_primitives_addon();
 		}
 		else
 			printf("ERROR INICIALIZANDO PRIMITIVES ADDON \n");
@@ -84,8 +85,8 @@ void print_baldosas(ALLEGRO_DISPLAY* display, Piso_t piso, unsigned int width, u
 			if ((getBaldosa(piso.baldosas_arr, fil, col, width)->estado) == SUCIO)
 			{
 				al_draw_filled_rectangle(col * TAMAÑOBAL, fil * TAMAÑOBAL, (col + 1) * TAMAÑOBAL, (fil + 1) * TAMAÑOBAL, al_map_rgb(220, 220, 220));
-				al_draw_rectangle(col * TAMAÑOBAL, fil * TAMAÑOBAL, (col + 1) * TAMAÑOBAL, (fil + 1) *TAMAÑOBAL, al_map_rgb(0, 0, 0), 0);
-			}	
+				al_draw_rectangle(col * TAMAÑOBAL, fil * TAMAÑOBAL, (col + 1) * TAMAÑOBAL, (fil + 1) * TAMAÑOBAL, al_map_rgb(0, 0, 0), 0);
+			}
 			else
 				al_draw_filled_rectangle(col * TAMAÑOBAL, fil * TAMAÑOBAL, (col + 1) * TAMAÑOBAL, (fil + 1) * TAMAÑOBAL, al_map_rgb(255, 255, 255));
 		}
@@ -94,7 +95,7 @@ void print_baldosas(ALLEGRO_DISPLAY* display, Piso_t piso, unsigned int width, u
 }
 
 
-void graph(graph_t*array, unsigned int max, unsigned int width, unsigned int height, ALLEGRO_DISPLAY* display)
+void graph(int* array, unsigned int max, unsigned int width, unsigned int height, ALLEGRO_DISPLAY* display)
 //Funcion que recibe un arreglo con los 1000 variaciones para robots y el tic correspondiente a cada uno. Estructura se encuentra en simulacion.h
 {
 	al_clear_to_color(al_map_rgb(255, 255, 255));
@@ -104,17 +105,27 @@ void graph(graph_t*array, unsigned int max, unsigned int width, unsigned int hei
 	comic_sans = set_font(30);
 
 	//x axis
-	al_draw_line(ORIGENX,ORIGENY, ORIGENX, height*(TAMAÑOBAL*0.95), al_map_rgb(0,0,0), 4);
+	al_draw_line(ORIGENX, ORIGENY, ORIGENX, height * (TAMAÑOBAL * 0.95) + 40, al_map_rgb(0, 0, 0), 4);
+	al_draw_textf(comic_sans, al_map_rgb(0, 0, 0), ORIGENX - 7 * TAMAÑOBAL, ((height * TAMAÑOBAL) / 2) - 50, 0, "ROBOTS");
+	al_draw_textf(comic_sans, al_map_rgb(0, 0, 0), (ORIGENX - TAMAÑOBAL), ORIGENY, 0, "%u", 0);
+	al_draw_textf(comic_sans, al_map_rgb(0, 0, 0), (ORIGENX - 2 * TAMAÑOBAL), ((height * (TAMAÑOBAL * 0.95) / 2)), 0, "%u", max / 2);
+	al_draw_textf(comic_sans, al_map_rgb(0, 0, 0), (ORIGENX - 2 * TAMAÑOBAL), ((height * TAMAÑOBAL * 0.95)), 0, "%u", max);
+
 
 	//y axis
 	int graph_var;
-	
-	al_draw_textf(comic_sans, al_map_rgb(0, 0, 0), (ORIGENX -TAMAÑOBAL) , ORIGENY, 0, "%u",0 );
-	al_draw_textf(comic_sans, al_map_rgb(0, 0, 0), (ORIGENX -2*TAMAÑOBAL), ORIGENY+ ((height * (TAMAÑOBAL * 0.95))/2)-20, 0, "%u", max/2);
-	al_draw_textf(comic_sans, al_map_rgb(0, 0, 0), (ORIGENX - 2*TAMAÑOBAL), ORIGENY + (height * (TAMAÑOBAL * 0.95))-120, 0, "%u", max );
+	al_draw_textf(comic_sans, al_map_rgb(255, 0, 0), (width * TAMAÑOBAL) / 2, ORIGENY - 2 * TAMAÑOBAL, ALLEGRO_ALIGN_CENTER, "TICK COUNT");
+	al_draw_line(ORIGENX, ORIGENY, width * (TAMAÑOBAL * 0.95), ORIGENY, al_map_rgb(255, 0, 0), 4);			//al_draw_line(20, 20, (array[0].cantidad_robots) * (0.1), 20, al_map_rgb(0, 0, 0), 4);
 
-	al_draw_line(ORIGENX, ORIGENY, width*(TAMAÑOBAL*0.95), ORIGENY, al_map_rgb(255, 0, 0), 4);			//al_draw_line(20, 20, (array[0].cantidad_robots) * (0.1), 20, al_map_rgb(0, 0, 0), 4);
-	//Imprimir arreglo y generar tabla
+
+	//Imprimir barras
+
+	int escala = (height * (TAMAÑOBAL * 0.95)) / max;
+
+	for (graph_var = 0; graph_var < max; graph_var++)
+	{
+		al_draw_line(ORIGENX, ORIGENY + (graph_var * escala), (array[graph_var]) + ORIGENX, ORIGENY + (graph_var * escala), al_map_rgb(128, 0, 128), 1);			//al_draw_line(20, 20, (array[0].cantidad_robots) * (0.1), 20, al_map_rgb(0, 0, 0), 4);
+	}
 	al_flip_display();
 	//free(comic_sans);
 

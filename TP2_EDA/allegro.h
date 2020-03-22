@@ -15,12 +15,13 @@
 #include "simulacion.h"
 
 
-/*******************************************************************************
- * ENUMERATIONS AND STRUCTURES AND TYPEDEFS
- ******************************************************************************/
+ /*******************************************************************************
+  * ENUMERATIONS AND STRUCTURES AND TYPEDEFS
+  ******************************************************************************/
 #define COMICSANS "comici.ttf"
-#define ORIGENX 90
+#define ORIGENX 290
 #define ORIGENY 90
+#define ESCALA 2
 typedef struct
 {
     unsigned int timeTaken;
@@ -36,7 +37,7 @@ ALLEGRO_DISPLAY* allegro_create(ALLEGRO_DISPLAY* display, unsigned int width, un
 bool allegro_init(void);
 void allegro_shut(ALLEGRO_DISPLAY* display);
 void print_baldosas(ALLEGRO_DISPLAY* display, Piso_t piso, unsigned int width, unsigned int height);
-void graph(graph_t* array, unsigned int max, unsigned int width, unsigned int height, ALLEGRO_DISPLAY* display);
+void graph(int* array, unsigned int max, unsigned int width, unsigned int height, ALLEGRO_DISPLAY* display);
 
 
 /*******************************************************************************

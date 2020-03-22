@@ -9,7 +9,6 @@
 /* DEBUG FUNCTIONS FOR DEVELOPMENT */
 void printAllRobots(Robot_t* robs, int count);
 void printFloor(Piso_t p, unsigned int height, unsigned int width);
-
 using namespace std;
 
 int main(int argc, char** argv)
@@ -22,7 +21,7 @@ int main(int argc, char** argv)
 	width = 30;
 	height = 30;
 	ROBOT_COUNT = 10;
-	modo = 1;
+	modo = 2;
 
 	// CHECKING IF FUNCTIONS WORK AS INTENDED
 	Robot_t* robs = createRobots(ROBOT_COUNT, height, width);
@@ -37,21 +36,31 @@ int main(int argc, char** argv)
 	cout << "Moving robot 0..." << endl;
 	cout << "Robot " << 0 << " is in (" << robs[0].x << ", " << robs[0].y << ")" << " direction " << robs[0].direccion << endl;
 	printFloor(p, height, width); // Check Updated baldosa
-	graph_t * grapharray= NULL;
+
+	int max_robottts = 50;
+	int grapharray[700];
+	int gg;
+	for (gg = 0; gg < max_robottts; gg++)
+	{
+		grapharray[gg] = gg;
+	}
 
 	ALLEGRO_DISPLAY* user_display = NULL;
-	user_display = allegro_create(user_display, width, height);
 
 	if (modo == MODO1)
 	{
-		//print_baldosas(user_display, p, width, height);
-		graph(grapharray, 450, width, height, user_display);
+		user_display = allegro_create(user_display, width, height);
+		print_baldosas(user_display, p, width, height);
 		al_rest(7.0);
 
 		//allegro_shut(user_display);
 	}
 	else //MODO 2
 	{
+		user_display = allegro_create(user_display, width + 5, height);
+		graph(grapharray, max_robottts, width, height, user_display);
+		al_rest(7.0);
+		allegro_shut(user_display);
 		/* /
 		for (i = 1, "A CRITERIO"; i++)
 		{
@@ -66,7 +75,7 @@ int main(int argc, char** argv)
 		*/
 
 	}
-	
+
 	return 0;
 }
 
@@ -81,10 +90,10 @@ void printAllRobots(Robot_t* robs, int count) {
 void printFloor(Piso_t p, unsigned int height, unsigned int width) {
 	// 0 IGUAL SUCIA, 1 LIMPIA
 	int i = 0;
-	for (i; i <width; i++) {
+	for (i; i < width; i++) {
 		// Para da columna
 		int j = 0;
-		for (j; j<height; j++) {
+		for (j; j < height; j++) {
 			// Imprimo la columna
 			cout << getBaldosa(p.baldosas_arr, i, j, width)->estado << " ";
 		}
