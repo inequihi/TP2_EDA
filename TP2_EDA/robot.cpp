@@ -7,7 +7,6 @@
 
 #define PI 3.14159265
 using namespace std;
-float getNextMove(char cord, float val, int direccion);
 
 Robot_t* createRobots(unsigned int count, unsigned int height, unsigned int width)
 {

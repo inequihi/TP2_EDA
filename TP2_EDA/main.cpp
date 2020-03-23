@@ -18,9 +18,9 @@ int main(int argc, char** argv)
 	unsigned int tickTemp, i, width, height, modo, ROBOT_COUNT;
 	srand(time(NULL));
 
-	width = 30;
-	height = 30;
-	ROBOT_COUNT = 2;
+	width = 50;
+	height = 50;
+	ROBOT_COUNT = 100;
 	modo = 1;
 
 	/*// CHECKING IF FUNCTIONS WORK AS INTENDED
@@ -52,11 +52,6 @@ int main(int argc, char** argv)
 	{
 		
 		Simulacion_t* simulation= createSim(ROBOT_COUNT, height, width, modo);
-
-		
-		
-		
-		
 		
 		user_display = allegro_create(user_display, width, height);
 		print_baldosas( (*simulation->piso), width, height);

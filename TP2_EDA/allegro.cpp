@@ -1,5 +1,6 @@
 #include "allegro.h"
 #include "piso.h"
+#include "robot.h"
 ALLEGRO_DISPLAY* allegro_create(ALLEGRO_DISPLAY* display, unsigned int width, unsigned int height)
 {
 	display = (ALLEGRO_DISPLAY*)malloc(sizeof(ALLEGRO_DISPLAY*));
@@ -90,6 +91,15 @@ void print_baldosas( Piso_t piso, unsigned int width, unsigned int height)
 			else
 				al_draw_filled_rectangle(col * TAMAÑOBAL, fil * TAMAÑOBAL, (col + 1) * TAMAÑOBAL, (fil + 1) * TAMAÑOBAL, al_map_rgb(255, 255, 255));
 		}
+	}
+}
+
+void print_robots(Robot_t* robs, unsigned int count) {
+	int i = 0;
+	for (i; i < count; i++) {
+		Robot_t robot = robs[i];
+		al_draw_circle(robot.x * TAMAÑOBAL, robot.y * TAMAÑOBAL, 2.0, al_map_rgb(100, 100, 1), 2.0);
+		al_draw_line(robot.x * TAMAÑOBAL, robot.y * TAMAÑOBAL, getNextMove('X', robot.x, robot.direccion) * TAMAÑOBAL, getNextMove('Y', robot.y, robot.direccion)  * TAMAÑOBAL, al_map_rgb(0, 0, 0), 2.0);
 	}
 	al_flip_display();
 }

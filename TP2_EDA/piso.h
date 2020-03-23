@@ -11,7 +11,7 @@
 
 #define SUCIO false
 #define LIMPIO true
-#define TAMAÑOBAL 30
+#define TAMAÑOBAL 20
 
 //BALDOSA
 typedef struct

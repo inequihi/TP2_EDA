@@ -28,4 +28,7 @@ Robot_t* createRobots(unsigned int count, unsigned int height, unsigned int widt
 void freeRobots(Robot_t* frobots);
 
 void moveRobot(Robot_t* moving_rob, unsigned int width, unsigned int height, Piso_t* p);
+
+float getNextMove(char cord, float val, int direccion);
+
 #endif //ROBOT_H
