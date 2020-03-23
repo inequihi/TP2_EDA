@@ -1,7 +1,7 @@
 #include "allegro.h"
 #include "piso.h"
 #include "robot.h"
-ALLEGRO_DISPLAY* allegro_create(ALLEGRO_DISPLAY* display, unsigned int width, unsigned int height)
+ALLEGRO_DISPLAY* allegro_create(ALLEGRO_DISPLAY* display, unsigned int width, unsigned int height, unsigned int modo)
 {
 	display = (ALLEGRO_DISPLAY*)malloc(sizeof(ALLEGRO_DISPLAY*));
 
@@ -12,17 +12,23 @@ ALLEGRO_DISPLAY* allegro_create(ALLEGRO_DISPLAY* display, unsigned int width, un
 			printf("ERROR INICIALIZANDO ALLEGRO \n");
 			return NULL;
 		}
+		switch (modo) 
+		{
+			case MODO1:
+				display = al_create_display(TAMAÑOBAL * width, TAMAÑOBAL * height);
+				break;
+			case MODO2:
+				display = al_create_display(width, height);
+				break; 
+		}
 
-		display = al_create_display(TAMAÑOBAL * width, TAMAÑOBAL * height);
 		if (!display)
 		{
 			printf("ERROR CREANDO DISPLAY \n");
 			return NULL;
-		}
-		return display;
-
+		}		
 	}
-
+	return display;
 }
 
 bool allegro_init()
@@ -47,7 +53,7 @@ bool allegro_init()
 					}
 					else
 						printf("ERROR INICIALIZANDO TTF ADDON");
-					al_shutdown_ttf_addon;
+					al_shutdown_ttf_addon();
 				}
 				else
 					printf("ERROR INICIALIZANDO FONT ADDON");
@@ -67,7 +73,7 @@ bool allegro_init()
 
 void allegro_shut(ALLEGRO_DISPLAY* display)
 {
-	al_shutdown_ttf_addon;
+	al_shutdown_ttf_addon();
 	al_shutdown_font_addon();
 	al_shutdown_primitives_addon();
 	al_shutdown_image_addon();
@@ -133,7 +139,7 @@ void graph(double* array, unsigned int max, unsigned int width, unsigned int hei
 
 
 	//y axis
-	long int graph_var;
+	unsigned int graph_var;
 	al_draw_line(0.1 * width, 0.9 * height, 0.1 * width, 0.05 * height, al_map_rgb(255, 0, 0), 4);			//al_draw_line(20, 20, (array[0].cantidad_robots) * (0.1), 20, al_map_rgb(0, 0, 0), 4);
 	al_draw_filled_triangle(0.1 * width, 0.04 * height, 0.09 * width, 0.09 * height, 0.11 * width, 0.09 * height, al_map_rgb(255, 0, 0));
 
@@ -152,15 +158,18 @@ void graph(double* array, unsigned int max, unsigned int width, unsigned int hei
 
 
 	//Imprimir barras
+	double escala_x = (0.9 * width - 0.1 * width) / max;
+	double escala_y = (double)((0.9 * height - 0.1 * height) / 50);   //Divido tamaño del eje y entre el maximo valor de ticks
 
-	int escala_x = (0.9 * width - 0.1 * width) / max;
-	int escala_y = (float)((0.9 * height - 0.1 * height) / array[1]);
+	al_draw_textf(comic_sans, al_map_rgb(255, 0, 0), width * 0.09, height * 0.87, ALLEGRO_ALIGN_CENTER, "%0.1d", 0.0);
+	al_draw_textf(comic_sans, al_map_rgb(255, 0, 0), width * 0.09, height * 0.45, ALLEGRO_ALIGN_CENTER, "%0.1d", array[max/2]);
+	al_draw_textf(comic_sans, al_map_rgb(255, 0, 0), width * 0.09, height * 0.1, ALLEGRO_ALIGN_CENTER, "%0.1d", array[0]);
 
 	for (graph_var = 0; graph_var < max; graph_var++)
 	{
-		al_draw_line(0.1 * width + ((graph_var + 1) * escala_x), 0.9 * height, 0.1 * width + ((graph_var + 1) * escala_x), (0.9 * height) - (array[graph_var]), al_map_rgb(128, 0, 128), 2);			//		al_draw_line(ORIGENX, ORIGENY + (graph_var * escala), (array.robot_count[graph_var]) + ORIGENX, ORIGENY + (graph_var * escala), al_map_rgb(128, 0, 128), 2);
+		al_draw_line(0.1 * width + (((double)graph_var) + 1) * escala_x, 0.9 * height, 0.1 * width + (((double)graph_var + 1) * escala_x), 0.8*height - ((array[graph_var])*escala_y) , al_map_rgb(0, 0,0), 3);			
 	}
-
+	
 	al_flip_display();
 }
 

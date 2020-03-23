@@ -37,13 +37,6 @@ int main(int argc, char** argv)
 	cout << "Robot " << 0 << " is in (" << robs[0].x << ", " << robs[0].y << ")" << " direction " << robs[0].direccion << endl;
 	printFloor(p, height, width); // Check Updated baldosa
 
-	int max_robottts = 50;
-	int grapharray[700];
-	int gg;
-	for (gg = 0; gg < max_robottts; gg++)
-	{
-		grapharray[gg] = gg;
-	}
 
 	ALLEGRO_DISPLAY* user_display = NULL;*/
 	ALLEGRO_DISPLAY* user_display = NULL;
@@ -53,7 +46,7 @@ int main(int argc, char** argv)
 
 		Simulacion_t* simulation = createSim(ROBOT_COUNT, height, width, modo);
 
-		user_display = allegro_create(user_display, width, height);
+		user_display = allegro_create(user_display, width, height,modo);
 
 		tickTemp = simulate(simulation);
 
@@ -69,6 +62,16 @@ int main(int argc, char** argv)
 		double tickTemp;
 		unsigned int modo2_var;
 
+		int max_robottts = 50;
+		double grapharray[50]={0.0};
+		int gg;
+
+		for (gg = 0; gg < max_robottts; gg++)
+		{
+			grapharray[gg] = gg;
+		}
+
+		/*
 		for (modo2_var = 1; modo2_done == false; modo2_var++)
 		{
 			for (tickTemp = 0.0; modo2_var < +1000; modo2_var++)
@@ -100,13 +103,14 @@ int main(int argc, char** argv)
 				}
 			}
 		}
-
-		/*
-			user_display=allegro_create(user_display, WIDTH_G, HEIGHT_G,modo);
-			graph(ticksTaken,modo2_var, WIDTH_G, HEIGHT_G, user_display);
-			al_rest(10.0);
-			alegro_shut(user_display);
 		*/
+		
+			user_display=allegro_create(user_display, WIDTH_G, HEIGHT_G,modo);
+			//graph(ticksTaken,modo2_var, WIDTH_G, HEIGHT_G, user_display);
+			graph(grapharray, max_robottts, WIDTH_G, HEIGHT_G, user_display);
+			al_rest(5.0);
+			//allegro_shut(user_display);
+
 
 	}
 

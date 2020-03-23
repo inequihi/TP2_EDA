@@ -37,7 +37,7 @@ typedef struct
 /*******************************************************************************
  * FUNCTION PROTOTYPES WITH GLOBAL SCOPE
  ******************************************************************************/
-ALLEGRO_DISPLAY* allegro_create(ALLEGRO_DISPLAY* display, unsigned int width, unsigned int height);
+ALLEGRO_DISPLAY* allegro_create(ALLEGRO_DISPLAY* display, unsigned int width, unsigned int height,unsigned int modo);
 
 bool allegro_init(void);
 void allegro_shut(ALLEGRO_DISPLAY* display);
