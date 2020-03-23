@@ -41,6 +41,6 @@ Simulacion_t* createSim(unsigned int count, unsigned int height, unsigned int wi
 
 void freeSim(Simulacion_t* psim);
 
-unsigned int simulate(Simulacion_t* psim);
+unsigned long int simulate(Simulacion_t* psim);
 
 #endif //PROTOIPOS_H

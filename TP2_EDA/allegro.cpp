@@ -85,14 +85,14 @@ void update_piso(Simulacion_t* psim)
 {
 	al_flip_display();
 	unsigned int dimension;
-	if ((psim->robotCount) < 40)
+	if ((psim->robotCount) < 60)
 	{
 		dimension = (psim->height) * (psim->width);
 		if (dimension < 1200 && dimension >= 800)
 			al_rest(1 / MAXFPS);
 		else if (dimension < 800 && dimension >= 200)
 			al_rest(FPS);
-		else if (dimension < 200)
+		else if (dimension < 400)
 			al_rest(MINFPS);
 	}
 }

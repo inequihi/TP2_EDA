@@ -16,7 +16,6 @@ Simulacion_t* createSim(unsigned int count, unsigned int height, unsigned int wi
 			Robot_t* User_robs = createRobots(count, height, width);
 			if (User_robs != NULL)
 			{
-
 				psim->robs = User_robs;
 				psim->tiempo = 0;
 				psim->modo = MODE;
@@ -28,8 +27,7 @@ Simulacion_t* createSim(unsigned int count, unsigned int height, unsigned int wi
 	}
 	else
 	{
-		free(psim);
-		psim = NULL;
+		printf("Error creado simulacion\n");
 	}
 
 	return psim;
@@ -43,7 +41,7 @@ void freeSim(Simulacion_t* psim)
 	free(psim);
 }
 
-unsigned int simulate(Simulacion_t* psim)
+unsigned long int simulate(Simulacion_t* psim)
 {
 	unsigned long ticks = 0;
 	unsigned int var_sim;
@@ -53,11 +51,11 @@ unsigned int simulate(Simulacion_t* psim)
 		for (var_sim = 0; var_sim < psim->robotCount; var_sim++) {
 
 			moveRobot(&(psim->robs[var_sim]), psim->width, psim->height, psim->piso); //Falta width y height?
-			print_piso(psim);
 		}
 		if ((psim->modo) == MODO1)
 		{
 			update_piso(psim);
+			print_piso(psim);
 		}
 	}
 	return ticks;

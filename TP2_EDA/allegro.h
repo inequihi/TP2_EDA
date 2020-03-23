@@ -41,8 +41,6 @@ ALLEGRO_DISPLAY* allegro_create(ALLEGRO_DISPLAY* display, unsigned int width, un
 
 bool allegro_init(void);
 void allegro_shut(ALLEGRO_DISPLAY* display);
-void print_baldosas(Piso_t piso, unsigned int width, unsigned int height);
-void print_robots(Robot_t* robs, unsigned int count);
 void graph(double* array, unsigned int max, unsigned int width, unsigned int height, ALLEGRO_DISPLAY* display);
 void update_piso(Simulacion_t* psim);
 void print_piso(Simulacion_t* psim);

@@ -13,14 +13,13 @@ using namespace std;
 
 int main(int argc, char** argv)
 {
-	Simulacion_t* simulation;
-	double timeTaken[1000] = { 0.0 };
-	unsigned int tickTemp, i, width, height, modo, ROBOT_COUNT;
+	//Simulacion_t* simulation;
+	unsigned int tickTemp, width, height, modo, ROBOT_COUNT;
 	srand(time(NULL));
 
-	width = 37;
-	height = 37;
-	ROBOT_COUNT = 40;
+	width = 10;
+	height = 10;
+	ROBOT_COUNT = 10;
 	modo = 1;
 
 	/*// CHECKING IF FUNCTIONS WORK AS INTENDED
@@ -58,38 +57,28 @@ int main(int argc, char** argv)
 	else //MODO 2
 	{
 		bool modo2_done = false;
-		double ticksTaken[500] = { 0.0 };
-		double tickTemp;
+		double ticksTaken[400] = { 0.0 };
+		double tickTemp=0;
 		unsigned int modo2_var;
 
-		int max_robottts = 50;
-		double grapharray[50]={0.0};
-		int gg;
-
-		for (gg = 0; gg < max_robottts; gg++)
-		{
-			grapharray[gg] = gg;
-		}
-
-		/*
 		for (modo2_var = 1; modo2_done == false; modo2_var++)
 		{
-			for (tickTemp = 0.0; modo2_var < +1000; modo2_var++)
+			for (tickTemp = 0.0; modo2_var < 1000; modo2_var++)
 			{
 				Simulacion_t* simulation = createSim(modo2_var, height, width, modo);
 				if (simulation != NULL)
 				{
 					tickTemp += (double)simulate(simulation);
 					freeSim(simulation);
-
 				}
 				else
 				{
 					printf("Error en una simulacion\n");
 				}
 			}
-			ticksTaken[modo2_var - 1] = tickTemp / 1000.0;			//Promedio de las 1000 simulaciones
-			printf("%d\n", ticksTaken[modo2_var]);
+
+			ticksTaken[modo2_var - 1] = tickTemp /1000.0;			//Promedio de las 1000 simulaciones
+			printf("%f\n", ticksTaken[modo2_var]);
 
 			if (modo2_var > 2)
 			{
@@ -103,13 +92,13 @@ int main(int argc, char** argv)
 				}
 			}
 		}
-		*/
+		
 		
 			user_display=allegro_create(user_display, WIDTH_G, HEIGHT_G,modo);
-			//graph(ticksTaken,modo2_var, WIDTH_G, HEIGHT_G, user_display);
-			graph(grapharray, max_robottts, WIDTH_G, HEIGHT_G, user_display);
+			graph(ticksTaken,modo2_var, WIDTH_G, HEIGHT_G, user_display);
+			//graph(grapharray, max_robottts, WIDTH_G, HEIGHT_G, user_display);
 			al_rest(5.0);
-			//allegro_shut(user_display);
+			allegro_shut(user_display);
 
 
 	}
