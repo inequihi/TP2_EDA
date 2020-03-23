@@ -63,6 +63,8 @@ int main(int argc, char** argv)
 		
 		tickTemp=simulate(simulation);
 		
+		print_baldosas(user_display, (*simulation->piso), width, height);
+		cout << "clean" << endl;
 		freeSim(simulation);
 		allegro_shut(user_display);
 	}

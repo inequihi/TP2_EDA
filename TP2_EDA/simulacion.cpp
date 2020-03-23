@@ -6,14 +6,14 @@ Simulacion_t* createSim(unsigned int count, unsigned int height, unsigned int wi
 	psim = (Simulacion_t*)malloc(sizeof(Simulacion_t));
 	if (psim != NULL)
 	{
-		Baldosa_t* User_piso;
-		User_piso = createFloor(height, width);
-		if (User_piso != NULL)
+		psim->piso = (Piso_t*)malloc(sizeof(Piso_t));
+		psim->piso->baldosas_arr=createFloor(height, width);
+		if (psim->piso->baldosas_arr != NULL)
 		{
 			Robot_t* User_robs = createRobots(count, height, width);
 			if (User_robs != NULL)
 			{
-				psim->piso->baldosas_arr = User_piso;
+				
 				psim->robs = User_robs;
 				psim->tiempo = 0;
 				psim->modo = MODE;
@@ -35,6 +35,7 @@ Simulacion_t* createSim(unsigned int count, unsigned int height, unsigned int wi
 void freeSim(Simulacion_t* psim)
 {
 	free(psim->piso->baldosas_arr);
+	free(psim->piso);
 	free(psim->robs);
 	free(psim);
 }
