@@ -18,9 +18,9 @@ int main(int argc, char** argv)
 	unsigned int tickTemp, i, width, height, modo, ROBOT_COUNT;
 	srand(time(NULL));
 
-	width = 50;
-	height = 50;
-	ROBOT_COUNT = 100;
+	width = 37;
+	height = 37;
+	ROBOT_COUNT = 40;
 	modo = 1;
 
 	/*// CHECKING IF FUNCTIONS WORK AS INTENDED
@@ -50,15 +50,13 @@ int main(int argc, char** argv)
 
 	if (modo == MODO1)
 	{
-		
-		Simulacion_t* simulation= createSim(ROBOT_COUNT, height, width, modo);
-		
+
+		Simulacion_t* simulation = createSim(ROBOT_COUNT, height, width, modo);
+
 		user_display = allegro_create(user_display, width, height);
-		print_baldosas( (*simulation->piso), width, height);
-		
-		tickTemp=simulate(simulation);
-		
-		print_baldosas( (*simulation->piso), width, height);
+
+		tickTemp = simulate(simulation);
+
 		cout << "clean" << endl;
 		freeSim(simulation);
 		allegro_shut(user_display);
@@ -125,10 +123,10 @@ void printAllRobots(Robot_t* robs, int count) {
 
 void printFloor(Piso_t p, unsigned int height, unsigned int width) {
 	// 0 IGUAL SUCIA, 1 LIMPIA
-	unsigned int i,j;
-	for (i=0; i < width; i++) {
+	unsigned int i, j;
+	for (i = 0; i < width; i++) {
 		// Para da columna;
-		for (j=0; j < height; j++) {
+		for (j = 0; j < height; j++) {
 			// Imprimo la columna
 			cout << getBaldosa(p.baldosas_arr, i, j, width)->estado << " ";
 		}

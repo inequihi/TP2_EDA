@@ -64,7 +64,7 @@ bool allegro_init()
 		printf("ERROR INICIALIZANDO ALLEGRO \n");
 	return false;
 }
- 
+
 void allegro_shut(ALLEGRO_DISPLAY* display)
 {
 	al_shutdown_ttf_addon;
@@ -75,15 +75,31 @@ void allegro_shut(ALLEGRO_DISPLAY* display)
 
 }
 
-void print_baldosas( Piso_t piso, unsigned int width, unsigned int height)
+void update_piso(Simulacion_t* psim)
 {
-	// 0 IGUAL SUCIO, 1 LIMPIO
-	unsigned int col = 0;
-	for (col; col < width; col++) {
+	al_flip_display();
+	unsigned int dimension;
+	if ((psim->robotCount) < 40)
+	{
+		dimension = (psim->height) * (psim->width);
+		if (dimension < 1200 && dimension >= 800)
+			al_rest(1 / MAXFPS);
+		else if (dimension < 800 && dimension >= 200)
+			al_rest(FPS);
+		else if (dimension < 200)
+			al_rest(MINFPS);
+	}
+}
+
+void print_piso(Simulacion_t* psim)
+{
+	// IMPRIMIMOS BALDOSAS
+	unsigned int i, col = 0;
+	for (col; col < (psim->width); col++) {
 		unsigned int fil = 0;
-		for (fil; fil < height; fil++) {
+		for (fil; fil < (psim->height); fil++) {
 			// Imprimo la columna,
-			if ((getBaldosa(piso.baldosas_arr, fil, col, width)->estado) == SUCIO)
+			if ((getBaldosa(psim->piso->baldosas_arr, fil, col, psim->width)->estado) == SUCIO)
 			{
 				al_draw_filled_rectangle(col * TAMAÑOBAL, fil * TAMAÑOBAL, (col + 1) * TAMAÑOBAL, (fil + 1) * TAMAÑOBAL, al_map_rgb(200, 200, 200));
 				al_draw_rectangle(col * TAMAÑOBAL, fil * TAMAÑOBAL, (col + 1) * TAMAÑOBAL, (fil + 1) * TAMAÑOBAL, al_map_rgb(0, 0, 0), 0);
@@ -92,17 +108,16 @@ void print_baldosas( Piso_t piso, unsigned int width, unsigned int height)
 				al_draw_filled_rectangle(col * TAMAÑOBAL, fil * TAMAÑOBAL, (col + 1) * TAMAÑOBAL, (fil + 1) * TAMAÑOBAL, al_map_rgb(255, 255, 255));
 		}
 	}
+
+	//IMPRIMIMOS ROBOTS
+	for (i = 0; i < (psim->robotCount); i++) {
+		Robot_t robot = psim->robs[i];
+		al_draw_circle(robot.x * TAMAÑOBAL, robot.y * TAMAÑOBAL, 2.0, al_map_rgb(100, 100, 1), 2.0);
+		al_draw_line(robot.x * TAMAÑOBAL, robot.y * TAMAÑOBAL, getNextMove('X', robot.x, robot.direccion) * TAMAÑOBAL, getNextMove('Y', robot.y, robot.direccion) * TAMAÑOBAL, al_map_rgb(0, 0, 0), 2.0);
+	}
+
 }
 
-void print_robots(Robot_t* robs, unsigned int count) {
-	int i = 0;
-	for (i; i < count; i++) {
-		Robot_t robot = robs[i];
-		al_draw_circle(robot.x * TAMAÑOBAL, robot.y * TAMAÑOBAL, 2.0, al_map_rgb(100, 100, 1), 2.0);
-		al_draw_line(robot.x * TAMAÑOBAL, robot.y * TAMAÑOBAL, getNextMove('X', robot.x, robot.direccion) * TAMAÑOBAL, getNextMove('Y', robot.y, robot.direccion)  * TAMAÑOBAL, al_map_rgb(0, 0, 0), 2.0);
-	}
-	al_flip_display();
-}
 
 void graph(double* array, unsigned int max, unsigned int width, unsigned int height, ALLEGRO_DISPLAY* display)
 //Funcion que recibe un arreglo con los 1000 variaciones para robots y el tic correspondiente a cada uno. Estructura se encuentra en simulacion.h
