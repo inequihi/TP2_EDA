@@ -5,10 +5,12 @@
 #ifndef SIMULACION_H
 #define SIMULACION_H
 
-#include <stdio.h>
-#include <stdlib.h>
 #include "robot.h"
 #include "piso.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
+#include <math.h> 
 
 /*******************************************************************************
  * ENUMERATIONS AND STRUCTURES AND TYPEDEFS

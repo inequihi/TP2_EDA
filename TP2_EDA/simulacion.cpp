@@ -1,5 +1,8 @@
 #include "simulacion.h"
 #include "piso.h"
+#include "allegro.h"
+
+
 Simulacion_t* createSim(unsigned int count, unsigned int height, unsigned int width,unsigned int MODE)
 {
 	Simulacion_t* psim;
@@ -45,10 +48,17 @@ unsigned int simulate(Simulacion_t* psim)
 	unsigned long ticks = 0;
 	unsigned int var_sim;
 	
-	while (!floorIsClean(psim->piso,psim->width,psim->height))
+	while (!floorIsClean(psim->piso, psim->width, psim->height))
 	{
-		for (var_sim = 0; psim->robotCount; var_sim++)
-			moveRobot(&(psim->robs[var_sim]),psim->width,psim->height, psim->piso); //Falta width y height?
+
+
+		for (var_sim = 0;var_sim < psim->robotCount; var_sim++) {
+			
+			moveRobot(&(psim->robs[var_sim]), psim->width, psim->height, psim->piso); //Falta width y height?
+			print_baldosas(*(psim->piso), psim->width, psim->height);
+			al_rest(0.1);
+	     }
+			
 		ticks++;
 	}
 

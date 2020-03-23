@@ -54,7 +54,7 @@ void moveRobot(Robot_t* moving_rob, unsigned int width, unsigned int height, Pis
 		X
 		Se toma el angulo 0 grados en esa vertical e incrementa para la derecha
 		Ej: X-- 90 grados */
-
+	
 	Robot_t robot = *moving_rob;
 	float newX, newY;
 	int newDirection = moving_rob->direccion;
@@ -80,7 +80,7 @@ void moveRobot(Robot_t* moving_rob, unsigned int width, unsigned int height, Pis
 	/* Luego de moverme limpio la baldosa */
 	Baldosa_t* b = getBaldosa(p->baldosas_arr, floor(newY), floor(newX), width);
 	b->estado = LIMPIO;
-	cout << "TEST IN ROBOTS CPP: " << b->estado << floor(newX) << floor(newY) << endl;
+	//cout << "TEST IN ROBOTS CPP: " << b->estado << floor(newX) << floor(newY) << endl;
 }
 
 float getNextMove(char cord, float val, int direccion) {

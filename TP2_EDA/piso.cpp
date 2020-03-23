@@ -5,7 +5,7 @@
 Baldosa_t* createFloor(unsigned int height, unsigned int width)
 {
 	unsigned long int  var_piso;
-	Baldosa_t* baldosa_array = (Baldosa_t*) malloc(height*width*sizeof(Baldosa_t));
+	Baldosa_t* baldosa_array = (Baldosa_t*) malloc(height *  sizeof(Baldosa_t)* width);
 	if (baldosa_array != NULL)
 	{
 		for (var_piso = 0; var_piso < (height * width); var_piso++)

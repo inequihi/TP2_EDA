@@ -74,7 +74,7 @@ void allegro_shut(ALLEGRO_DISPLAY* display)
 
 }
 
-void print_baldosas(ALLEGRO_DISPLAY* display, Piso_t piso, unsigned int width, unsigned int height)
+void print_baldosas( Piso_t piso, unsigned int width, unsigned int height)
 {
 	// 0 IGUAL SUCIO, 1 LIMPIO
 	unsigned int col = 0;
@@ -84,7 +84,7 @@ void print_baldosas(ALLEGRO_DISPLAY* display, Piso_t piso, unsigned int width, u
 			// Imprimo la columna,
 			if ((getBaldosa(piso.baldosas_arr, fil, col, width)->estado) == SUCIO)
 			{
-				al_draw_filled_rectangle(col * TAMAÑOBAL, fil * TAMAÑOBAL, (col + 1) * TAMAÑOBAL, (fil + 1) * TAMAÑOBAL, al_map_rgb(220, 220, 0));
+				al_draw_filled_rectangle(col * TAMAÑOBAL, fil * TAMAÑOBAL, (col + 1) * TAMAÑOBAL, (fil + 1) * TAMAÑOBAL, al_map_rgb(200, 200, 200));
 				al_draw_rectangle(col * TAMAÑOBAL, fil * TAMAÑOBAL, (col + 1) * TAMAÑOBAL, (fil + 1) * TAMAÑOBAL, al_map_rgb(0, 0, 0), 0);
 			}
 			else

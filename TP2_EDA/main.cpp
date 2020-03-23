@@ -20,7 +20,7 @@ int main(int argc, char** argv)
 
 	width = 30;
 	height = 30;
-	ROBOT_COUNT = 1;
+	ROBOT_COUNT = 2;
 	modo = 1;
 
 	/*// CHECKING IF FUNCTIONS WORK AS INTENDED
@@ -51,7 +51,7 @@ int main(int argc, char** argv)
 	if (modo == MODO1)
 	{
 		
-		Simulacion_t* simulation= createSim(1, height, width, modo);
+		Simulacion_t* simulation= createSim(ROBOT_COUNT, height, width, modo);
 
 		
 		
@@ -59,11 +59,11 @@ int main(int argc, char** argv)
 		
 		
 		user_display = allegro_create(user_display, width, height);
-		print_baldosas(user_display, (*simulation->piso), width, height);
+		print_baldosas( (*simulation->piso), width, height);
 		
 		tickTemp=simulate(simulation);
 		
-		print_baldosas(user_display, (*simulation->piso), width, height);
+		print_baldosas( (*simulation->piso), width, height);
 		cout << "clean" << endl;
 		freeSim(simulation);
 		allegro_shut(user_display);
