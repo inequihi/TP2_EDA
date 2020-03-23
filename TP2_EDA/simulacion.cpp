@@ -56,13 +56,13 @@ unsigned int simulate(Simulacion_t* psim)
 			
 			moveRobot(&(psim->robs[var_sim]), psim->width, psim->height, psim->piso); //Falta width y height?
 			print_baldosas(*(psim->piso), psim->width, psim->height);
-			print_robots(psim->robs, psim->robotCount);
-			al_rest(0.01);
+			print_robots(psim->robs, psim->robotCount);			
 	     }
-			
-		ticks++;
+		if ((psim->modo) == MODO1)
+		{
+			al_rest(0.1);
+		}
 	}
-
 	return ticks;
 }
 

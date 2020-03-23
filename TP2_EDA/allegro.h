@@ -19,8 +19,8 @@
   * ENUMERATIONS AND STRUCTURES AND TYPEDEFS
   ******************************************************************************/
 #define COMICSANS "comici.ttf"
-#define ORIGENX 290
-#define ORIGENY 90
+#define WIDTH_G 1500
+#define HEIGHT_G 1000
 #define ESCALA 2
 typedef struct
 {
@@ -38,7 +38,7 @@ bool allegro_init(void);
 void allegro_shut(ALLEGRO_DISPLAY* display);
 void print_baldosas( Piso_t piso, unsigned int width, unsigned int height);
 void print_robots(Robot_t* robs, unsigned int count);
-void graph(int* array, unsigned int max, unsigned int width, unsigned int height, ALLEGRO_DISPLAY* display);
+void graph(double* array, unsigned int max, unsigned int width, unsigned int height, ALLEGRO_DISPLAY* display);
 
 
 /*******************************************************************************

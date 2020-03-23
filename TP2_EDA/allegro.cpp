@@ -104,45 +104,51 @@ void print_robots(Robot_t* robs, unsigned int count) {
 	al_flip_display();
 }
 
-
-void graph(int* array, unsigned int max, unsigned int width, unsigned int height, ALLEGRO_DISPLAY* display)
+void graph(double* array, unsigned int max, unsigned int width, unsigned int height, ALLEGRO_DISPLAY* display)
 //Funcion que recibe un arreglo con los 1000 variaciones para robots y el tic correspondiente a cada uno. Estructura se encuentra en simulacion.h
 {
 	al_clear_to_color(al_map_rgb(255, 255, 255));
 	ALLEGRO_FONT* comic_sans;
-	int axis_size_y = width * TAMAÑOBAL * 0.95;
-	int axis_size_x = height * TAMAÑOBAL * 0.95;
+	int axis_size_y = width * 0.80;
+	int axis_size_x = height * 0.80;
 
 	//x axis
-	al_draw_line(ORIGENX, ORIGENY, ORIGENX, height * (TAMAÑOBAL * 0.95) + 40, al_map_rgb(0, 0, 0), 4);
-	al_draw_filled_triangle(ORIGENX, axis_size_x + 50, ORIGENX - 10, axis_size_x+30, ORIGENX + 10, axis_size_x+30, al_map_rgb(0, 0, 0));
+	al_draw_line(0.1 * width, 0.9 * height, 0.95 * width, 0.9 * height, al_map_rgb(0, 0, 0), 4);
+	al_draw_filled_triangle(0.96 * width, 0.9 * height, 0.93 * width, 0.91 * height, 0.93 * width, 0.89 * height, al_map_rgb(0, 0, 0));
+
 
 	//y axis
-	int graph_var;
-	al_draw_line(ORIGENX, ORIGENY,axis_size_y+20, ORIGENY, al_map_rgb(255, 0, 0), 4);			//al_draw_line(20, 20, (array[0].cantidad_robots) * (0.1), 20, al_map_rgb(0, 0, 0), 4);
-	al_draw_filled_triangle(axis_size_y+50,ORIGENY,axis_size_y+20,ORIGENY+10,axis_size_y+20,ORIGENY-10, al_map_rgb(255, 0, 0));
+	long int graph_var;
+	al_draw_line(0.1 * width, 0.9 * height, 0.1 * width, 0.05 * height, al_map_rgb(255, 0, 0), 4);			//al_draw_line(20, 20, (array[0].cantidad_robots) * (0.1), 20, al_map_rgb(0, 0, 0), 4);
+	al_draw_filled_triangle(0.1 * width, 0.04 * height, 0.09 * width, 0.09 * height, 0.11 * width, 0.09 * height, al_map_rgb(255, 0, 0));
 
 	//labels
-	comic_sans = set_font(60);
-	al_draw_textf(comic_sans, al_map_rgb(0, 0, 0), ORIGENX - 7 * TAMAÑOBAL, ((height * TAMAÑOBAL) / 2) - 120, 0, "ROBOTS");
-	al_draw_textf(comic_sans, al_map_rgb(255, 0, 0), (width * TAMAÑOBAL) / 2, ORIGENY - 2 * TAMAÑOBAL, ALLEGRO_ALIGN_CENTER, "TICK COUNT");
 	comic_sans = set_font(30);
-	al_draw_textf(comic_sans, al_map_rgb(0, 0, 0), (ORIGENX - TAMAÑOBAL), ORIGENY, 0, "%u", 0);
-	al_draw_textf(comic_sans, al_map_rgb(0, 0, 0), (ORIGENX - 2 * TAMAÑOBAL), (axis_size_x / 2), 0, "%u", max / 2);
-	al_draw_textf(comic_sans, al_map_rgb(0, 0, 0), (ORIGENX - 2 * TAMAÑOBAL), (axis_size_x), 0, "%u", max);
+
+	al_draw_textf(comic_sans, al_map_rgb(0, 0, 0), 0.37 * width, 0.95 * height, 0, "ROBOTS");
+	al_draw_textf(comic_sans, al_map_rgb(255, 0, 0), 0.02 * width, 0.5 * height, 0, "TICK");
+	al_draw_textf(comic_sans, al_map_rgb(255, 0, 0), 0.01 * width, 0.55 * height, 0, "COUNT");
+
+
+	comic_sans = set_font(20);
+	al_draw_textf(comic_sans, al_map_rgb(0, 0, 0), width * 0.1, height * 0.92, ALLEGRO_ALIGN_CENTRE, "%u", 0);
+	al_draw_textf(comic_sans, al_map_rgb(0, 0, 0), width * 0.5, height * 0.92, ALLEGRO_ALIGN_CENTER, "%u", max / 2);
+	al_draw_textf(comic_sans, al_map_rgb(0, 0, 0), width * 0.9, height * 0.92, ALLEGRO_ALIGN_CENTER, "%u", max);
 
 
 	//Imprimir barras
 
-	int escala = (height * (TAMAÑOBAL * 0.95)) / max;
+	int escala_x = (0.9 * width - 0.1 * width) / max;
+	int escala_y = (float)((0.9 * height - 0.1 * height) / array[1]);
 
 	for (graph_var = 0; graph_var < max; graph_var++)
 	{
-		al_draw_line(ORIGENX, ORIGENY + (graph_var * escala), (array[graph_var]) + ORIGENX, ORIGENY + (graph_var * escala), al_map_rgb(128, 0, 128), 2);			//		al_draw_line(ORIGENX, ORIGENY + (graph_var * escala), (array.robot_count[graph_var]) + ORIGENX, ORIGENY + (graph_var * escala), al_map_rgb(128, 0, 128), 2);
+		al_draw_line(0.1 * width + ((graph_var + 1) * escala_x), 0.9 * height, 0.1 * width + ((graph_var + 1) * escala_x), (0.9 * height) - (array[graph_var]), al_map_rgb(128, 0, 128), 2);			//		al_draw_line(ORIGENX, ORIGENY + (graph_var * escala), (array.robot_count[graph_var]) + ORIGENX, ORIGENY + (graph_var * escala), al_map_rgb(128, 0, 128), 2);
 	}
-	al_flip_display();
 
+	al_flip_display();
 }
+
 
 ALLEGRO_FONT* set_font(unsigned int size)
 {

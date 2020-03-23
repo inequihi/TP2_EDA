@@ -63,23 +63,51 @@ int main(int argc, char** argv)
 		freeSim(simulation);
 		allegro_shut(user_display);
 	}
+
 	else //MODO 2
 	{
-		/*user_display = allegro_create(user_display, width + 5, height);
-		graph(grapharray, max_robottts, width, height, user_display);
-		al_rest(7.0);
-		//allegro_shut(user_display);
-		/* /
-		for (i = 1, "A CRITERIO"; i++)
+		bool modo2_done = false;
+		double ticksTaken[500] = { 0.0 };
+		double tickTemp;
+		unsigned int modo2_var;
+
+		for (modo2_var = 1; modo2_done == false; modo2_var++)
 		{
-			user_simulation = createSim(i, height, width);
-			if (user_simulation != NULL)
+			for (tickTemp = 0.0; modo2_var < +1000; modo2_var++)
 			{
-				tickTemp = simulate(user_simulation);
+				Simulacion_t* simulation = createSim(modo2_var, height, width, modo);
+				if (simulation != NULL)
+				{
+					tickTemp += (double)simulate(simulation);
+					freeSim(simulation);
+
+				}
+				else
+				{
+					printf("Error en una simulacion\n");
+				}
 			}
-			timeTaken[i - 1] += tickTemp;
-			freeSim(user_simulation);
+			ticksTaken[modo2_var - 1] = tickTemp / 1000.0;			//Promedio de las 1000 simulaciones
+			printf("%d\n", ticksTaken[modo2_var]);
+
+			if (modo2_var > 2)
+			{
+				if ((ticksTaken[modo2_var - 2] - ticksTaken[modo2_var - 1]) >= 0.1)
+				{
+					modo2_done = false;
+				}
+				else
+				{
+					modo2_done = true;
+				}
+			}
 		}
+
+		/*
+			user_display=allegro_create(user_display, WIDTH_G, HEIGHT_G,modo);
+			graph(ticksTaken,modo2_var, WIDTH_G, HEIGHT_G, user_display);
+			al_rest(10.0);
+			alegro_shut(user_display);
 		*/
 
 	}
