@@ -100,20 +100,26 @@ void graph(int* array, unsigned int max, unsigned int width, unsigned int height
 {
 	al_clear_to_color(al_map_rgb(255, 255, 255));
 	ALLEGRO_FONT* comic_sans;
-	comic_sans = set_font(30);
+	int axis_size_y = width * TAMAÑOBAL * 0.95;
+	int axis_size_x = height * TAMAÑOBAL * 0.95;
 
 	//x axis
 	al_draw_line(ORIGENX, ORIGENY, ORIGENX, height * (TAMAÑOBAL * 0.95) + 40, al_map_rgb(0, 0, 0), 4);
-	al_draw_textf(comic_sans, al_map_rgb(0, 0, 0), ORIGENX - 7 * TAMAÑOBAL, ((height * TAMAÑOBAL) / 2) - 50, 0, "ROBOTS");
-	al_draw_textf(comic_sans, al_map_rgb(0, 0, 0), (ORIGENX - TAMAÑOBAL), ORIGENY, 0, "%u", 0);
-	al_draw_textf(comic_sans, al_map_rgb(0, 0, 0), (ORIGENX - 2 * TAMAÑOBAL), ((height * (TAMAÑOBAL * 0.95) / 2)), 0, "%u", max / 2);
-	al_draw_textf(comic_sans, al_map_rgb(0, 0, 0), (ORIGENX - 2 * TAMAÑOBAL), ((height * TAMAÑOBAL * 0.95)), 0, "%u", max);
-
+	al_draw_filled_triangle(ORIGENX, axis_size_x + 50, ORIGENX - 10, axis_size_x+30, ORIGENX + 10, axis_size_x+30, al_map_rgb(0, 0, 0));
 
 	//y axis
 	int graph_var;
+	al_draw_line(ORIGENX, ORIGENY,axis_size_y+20, ORIGENY, al_map_rgb(255, 0, 0), 4);			//al_draw_line(20, 20, (array[0].cantidad_robots) * (0.1), 20, al_map_rgb(0, 0, 0), 4);
+	al_draw_filled_triangle(axis_size_y+50,ORIGENY,axis_size_y+20,ORIGENY+10,axis_size_y+20,ORIGENY-10, al_map_rgb(255, 0, 0));
+
+	//labels
+	comic_sans = set_font(60);
+	al_draw_textf(comic_sans, al_map_rgb(0, 0, 0), ORIGENX - 7 * TAMAÑOBAL, ((height * TAMAÑOBAL) / 2) - 120, 0, "ROBOTS");
 	al_draw_textf(comic_sans, al_map_rgb(255, 0, 0), (width * TAMAÑOBAL) / 2, ORIGENY - 2 * TAMAÑOBAL, ALLEGRO_ALIGN_CENTER, "TICK COUNT");
-	al_draw_line(ORIGENX, ORIGENY, width * (TAMAÑOBAL * 0.95), ORIGENY, al_map_rgb(255, 0, 0), 4);			//al_draw_line(20, 20, (array[0].cantidad_robots) * (0.1), 20, al_map_rgb(0, 0, 0), 4);
+	comic_sans = set_font(30);
+	al_draw_textf(comic_sans, al_map_rgb(0, 0, 0), (ORIGENX - TAMAÑOBAL), ORIGENY, 0, "%u", 0);
+	al_draw_textf(comic_sans, al_map_rgb(0, 0, 0), (ORIGENX - 2 * TAMAÑOBAL), (axis_size_x / 2), 0, "%u", max / 2);
+	al_draw_textf(comic_sans, al_map_rgb(0, 0, 0), (ORIGENX - 2 * TAMAÑOBAL), (axis_size_x), 0, "%u", max);
 
 
 	//Imprimir barras
@@ -122,7 +128,7 @@ void graph(int* array, unsigned int max, unsigned int width, unsigned int height
 
 	for (graph_var = 0; graph_var < max; graph_var++)
 	{
-		al_draw_line(ORIGENX, ORIGENY + (graph_var * escala), (array[graph_var]) + ORIGENX, ORIGENY + (graph_var * escala), al_map_rgb(128, 0, 128), 1);			//al_draw_line(20, 20, (array[0].cantidad_robots) * (0.1), 20, al_map_rgb(0, 0, 0), 4);
+		al_draw_line(ORIGENX, ORIGENY + (graph_var * escala), (array[graph_var]) + ORIGENX, ORIGENY + (graph_var * escala), al_map_rgb(128, 0, 128), 2);			//		al_draw_line(ORIGENX, ORIGENY + (graph_var * escala), (array.robot_count[graph_var]) + ORIGENX, ORIGENY + (graph_var * escala), al_map_rgb(128, 0, 128), 2);
 	}
 	al_flip_display();
 

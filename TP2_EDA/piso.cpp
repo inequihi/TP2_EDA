@@ -4,19 +4,24 @@
 
 Baldosa_t* createFloor(unsigned int height, unsigned int width)
 {
-	unsigned int  var_piso;
+	unsigned long int  var_piso;
 	Baldosa_t* baldosa_array = (Baldosa_t*) malloc(height*width*sizeof(Baldosa_t));
 	if (baldosa_array != NULL)
 	{
 		for (var_piso = 0; var_piso < (height * width); var_piso++)
 			baldosa_array[var_piso].estado = SUCIO;
 	}
+	else 
+	{
+		free(baldosa_array);
+		baldosa_array = NULL;
+	}
 	return baldosa_array;
 }
 
 bool floorIsClean(Piso_t * p,unsigned int width,unsigned int height) {
 	
-	int i, j;
+	unsigned int i, j;
 	bool state = true;
 	
 	for (i = 0; i < width && state; i++) {

@@ -3,26 +3,40 @@
 Simulacion_t* createSim(unsigned int count, unsigned int height, unsigned int width,unsigned int MODE)
 {
 	Simulacion_t* psim;
+	psim = (Simulacion_t*)malloc(sizeof(Simulacion_t));
+	if (psim != NULL)
+	{
+		Baldosa_t* User_piso;
+		User_piso = createFloor(height, width);
+		if (User_piso != NULL)
+		{
+			Robot_t* User_robs = createRobots(count, height, width);
+			if (User_robs != NULL)
+			{
+				psim->piso->baldosas_arr = User_piso;
+				psim->robs = User_robs;
+				psim->tiempo = 0;
+				psim->modo = MODE;
+				psim->robotCount = count;
+				psim->height = height;
+				psim->width = width;
+			}
+		}
+	}
+	else
+	{
+		free(psim);
+		psim = NULL;
+	}
 	
-	Piso_t* piso;
-	piso->baldosas_arr = createFloor(height, width);
-	psim->p = piso;
-
-	psim->robs= createRobots(count, height, width);
-
-	psim->tiempo = 0;
-	psim->modo = MODE;
-	psim->robotCount = count;
-	psim->height = height;
-	psim->width = width;
-
 	return psim;
 }
 
 void freeSim(Simulacion_t* psim)
 {
-	free(psim->p->baldosas_arr);
+	free(psim->piso->baldosas_arr);
 	free(psim->robs);
+	free(psim);
 }
 
 unsigned int simulate(Simulacion_t* psim)
@@ -30,10 +44,10 @@ unsigned int simulate(Simulacion_t* psim)
 	unsigned long ticks = 0;
 	unsigned int var_sim;
 	
-	while (!floorIsClean(psim->p,psim->width,psim->height))
+	while (!floorIsClean(psim->piso,psim->width,psim->height))
 	{
 		for (var_sim = 0; psim->robotCount; var_sim++)
-			moveRobot(&(psim->robs[var_sim]),psim->width,psim->height, psim->p); //Falta width y height?
+			moveRobot(&(psim->robs[var_sim]),psim->width,psim->height, psim->piso); //Falta width y height?
 		ticks++;
 	}
 

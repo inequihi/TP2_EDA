@@ -34,6 +34,11 @@ Robot_t* createRobots(unsigned int count, unsigned int height, unsigned int widt
 			}
 		}
 	}
+	else
+	{
+		free(robs);
+		robs = NULL;
+	}
 	return robs;
 }
 
