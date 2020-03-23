@@ -1,6 +1,9 @@
 #include "piso.h"
 #include "simulacion.h"
 #include "allegro.h"
+#include "parseCmd.h"
+#include "prototipos.h"
+#include "parseCallback.h"
 #include "robot.h"
 #include <stdlib.h>
 #include <time.h>
@@ -13,15 +16,89 @@ using namespace std;
 
 int main(int argc, char** argv)
 {
-	//Simulacion_t* simulation;
-	unsigned int tickTemp, width, height, modo, ROBOT_COUNT;
-	srand(time(NULL));
+	user_t Simulation_data;
 
-	width = 20;
-	height = 20;
-	ROBOT_COUNT = 10;
-	modo = 2;
+	/* VALID KEYS: -robots -modo -ancho -alto */
 
+	if (parseCmdLine(argc, argv, parseCallback, &Simulation_data))
+	{
+		unsigned int tickTemp, width, height, modo, robot_count;
+		srand(time(NULL));
+
+		robot_count = Simulation_data.cant_robots;
+		width = Simulation_data.ancho;
+		height = Simulation_data.alto;
+		modo = Simulation_data.modo;
+
+		ALLEGRO_DISPLAY* user_display = NULL;
+
+		if (modo == MODO1)
+		{
+
+			Simulacion_t* simulation = createSim(robot_count, height, width, modo);
+
+			user_display = allegro_create(user_display, width, height, modo);
+
+			tickTemp = simulate(simulation);
+
+			cout << "clean in " << tickTemp << endl;
+			freeSim(simulation);
+			allegro_shut(user_display);
+		}
+
+		else //MODO 2
+		{
+			bool modo2_done = false;
+			double ticksTaken[400] = { 0.0 };
+			double tickTemp = 0;
+			unsigned int modo2_var;
+
+
+			for (modo2_var = 1; modo2_done == false; modo2_var++)
+			{
+				unsigned int i = 0;
+				Simulacion_t* simulation = createSim(modo2_var, height, width, modo);
+				for (tickTemp = 0.0; i < 1000; i++)
+				{
+					if (simulation != NULL)
+					{
+						tickTemp += (double)simulate(simulation);
+					}
+					else
+					{
+						printf("Error en una simulacion\n");
+					}
+				}
+				freeSim(simulation);
+
+				ticksTaken[modo2_var - 1] = tickTemp / 1000.0;			//Promedio de las 1000 simulaciones
+				printf("%f\n", ticksTaken[modo2_var - 1]);
+
+				if (modo2_var > 2)
+				{
+					if ((ticksTaken[modo2_var - 2] - ticksTaken[modo2_var - 1]) >= 0.1)
+					{
+						modo2_done = false;
+					}
+					else
+					{
+						modo2_done = true;
+					}
+				}
+			}
+
+			user_display = allegro_create(user_display, WIDTH_G, HEIGHT_G, modo);
+			graph(&ticksTaken[0], modo2_var, WIDTH_G, HEIGHT_G, user_display);
+			//graph(grapharray, max_robottts, WIDTH_G, HEIGHT_G, user_display);
+			al_rest(5.0);
+			allegro_shut(user_display);
+
+
+		}
+
+	}
+
+	
 	/*// CHECKING IF FUNCTIONS WORK AS INTENDED
 	Robot_t* robs = createRobots(ROBOT_COUNT, height, width);
 	printAllRobots(robs, ROBOT_COUNT); //Check robots creation
@@ -36,74 +113,7 @@ int main(int argc, char** argv)
 	cout << "Robot " << 0 << " is in (" << robs[0].x << ", " << robs[0].y << ")" << " direction " << robs[0].direccion << endl;
 	printFloor(p, height, width); // Check Updated baldosa
 
-
 	ALLEGRO_DISPLAY* user_display = NULL;*/
-	ALLEGRO_DISPLAY* user_display = NULL;
-
-	if (modo == MODO1)
-	{
-
-		Simulacion_t* simulation = createSim(ROBOT_COUNT, height, width, modo);
-
-		user_display = allegro_create(user_display, width, height,modo);
-
-		tickTemp = simulate(simulation);
-
-		cout << "clean in " << tickTemp<< endl;
-		freeSim(simulation);
-		allegro_shut(user_display);
-	}
-
-	else //MODO 2
-	{
-		bool modo2_done = false;
-		double ticksTaken[400] = { 0.0 };
-		double tickTemp=0;
-		unsigned int modo2_var;
-
-
-		for (modo2_var = 1; modo2_done == false; modo2_var++)
-		{
-			unsigned int i = 0;
-			Simulacion_t* simulation = createSim(modo2_var, height, width, modo);
-			for (tickTemp = 0.0; i < 1000; i++)
-			{
-				if (simulation != NULL)
-				{
-					tickTemp += (double)simulate(simulation);
-				}
-				else
-				{
-					printf("Error en una simulacion\n");
-				}
-			}
-			freeSim(simulation);
-
-			ticksTaken[modo2_var - 1] = tickTemp / 1000.0;			//Promedio de las 1000 simulaciones
-			printf("%f\n", ticksTaken[modo2_var-1]);
-
-			if (modo2_var > 2)
-			{
-				if ((ticksTaken[modo2_var - 2] - ticksTaken[modo2_var - 1]) >= 0.1)
-				{
-					modo2_done = false;
-				}
-				else
-				{
-					modo2_done = true;
-				}
-			}
-		}
-
-		user_display = allegro_create(user_display, WIDTH_G, HEIGHT_G, modo);
-		graph(&ticksTaken[0], modo2_var, WIDTH_G, HEIGHT_G, user_display);
-		//graph(grapharray, max_robottts, WIDTH_G, HEIGHT_G, user_display);
-		al_rest(5.0);
-		allegro_shut(user_display);
-
-
-	}
-
 	return 0;
 }
 

@@ -30,6 +30,12 @@
     <ClCompile Include="allegro.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
+    <ClCompile Include="parseCallback.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="parseCmd.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="piso.h">
@@ -42,6 +48,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="allegro.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ParseCallback.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="parseCmd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="prototipos.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

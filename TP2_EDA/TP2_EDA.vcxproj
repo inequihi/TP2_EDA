@@ -128,6 +128,10 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <CustomBuildStep>
+      <Command>
+      </Command>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -163,6 +167,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="allegro.cpp" />
+    <ClCompile Include="parseCallback.cpp" />
+    <ClCompile Include="parseCmd.cpp" />
     <ClCompile Include="simulacion.cpp" />
     <ClCompile Include="robot.cpp" />
     <ClCompile Include="piso.cpp" />
@@ -170,7 +176,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="allegro.h" />
+    <ClInclude Include="ParseCallback.h" />
+    <ClInclude Include="parseCmd.h" />
     <ClInclude Include="piso.h" />
+    <ClInclude Include="prototipos.h" />
     <ClInclude Include="simulacion.h" />
     <ClInclude Include="robot.h" />
   </ItemGroup>
