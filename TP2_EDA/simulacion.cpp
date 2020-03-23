@@ -9,7 +9,7 @@ Simulacion_t* createSim(unsigned int count, unsigned int height, unsigned int wi
 	psim = (Simulacion_t*)malloc(sizeof(Simulacion_t));
 	if (psim != NULL)
 	{
-		psim->piso = (Piso_t*)malloc(sizeof(Piso_t));
+		psim->piso = (Piso_t*)malloc(sizeof(Piso_t)*1000);
 		psim->piso->baldosas_arr = createFloor(height, width);
 		if (psim->piso->baldosas_arr != NULL)
 		{
@@ -57,6 +57,7 @@ unsigned long int simulate(Simulacion_t* psim)
 			update_piso(psim);
 			print_piso(psim);
 		}
+		ticks++;
 	}
 	return ticks;
 }

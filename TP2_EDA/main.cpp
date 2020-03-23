@@ -17,10 +17,10 @@ int main(int argc, char** argv)
 	unsigned int tickTemp, width, height, modo, ROBOT_COUNT;
 	srand(time(NULL));
 
-	width = 10;
-	height = 10;
+	width = 20;
+	height = 20;
 	ROBOT_COUNT = 10;
-	modo = 1;
+	modo = 2;
 
 	/*// CHECKING IF FUNCTIONS WORK AS INTENDED
 	Robot_t* robs = createRobots(ROBOT_COUNT, height, width);
@@ -49,7 +49,7 @@ int main(int argc, char** argv)
 
 		tickTemp = simulate(simulation);
 
-		cout << "clean" << endl;
+		cout << "clean in " << tickTemp<< endl;
 		freeSim(simulation);
 		allegro_shut(user_display);
 	}
@@ -61,24 +61,26 @@ int main(int argc, char** argv)
 		double tickTemp=0;
 		unsigned int modo2_var;
 
+
 		for (modo2_var = 1; modo2_done == false; modo2_var++)
 		{
-			for (tickTemp = 0.0; modo2_var < 1000; modo2_var++)
+			unsigned int i = 0;
+			Simulacion_t* simulation = createSim(modo2_var, height, width, modo);
+			for (tickTemp = 0.0; i < 1000; i++)
 			{
-				Simulacion_t* simulation = createSim(modo2_var, height, width, modo);
 				if (simulation != NULL)
 				{
 					tickTemp += (double)simulate(simulation);
-					freeSim(simulation);
 				}
 				else
 				{
 					printf("Error en una simulacion\n");
 				}
 			}
+			freeSim(simulation);
 
-			ticksTaken[modo2_var - 1] = tickTemp /1000.0;			//Promedio de las 1000 simulaciones
-			printf("%f\n", ticksTaken[modo2_var]);
+			ticksTaken[modo2_var - 1] = tickTemp / 1000.0;			//Promedio de las 1000 simulaciones
+			printf("%f\n", ticksTaken[modo2_var-1]);
 
 			if (modo2_var > 2)
 			{
@@ -92,13 +94,12 @@ int main(int argc, char** argv)
 				}
 			}
 		}
-		
-		
-			user_display=allegro_create(user_display, WIDTH_G, HEIGHT_G,modo);
-			graph(ticksTaken,modo2_var, WIDTH_G, HEIGHT_G, user_display);
-			//graph(grapharray, max_robottts, WIDTH_G, HEIGHT_G, user_display);
-			al_rest(5.0);
-			allegro_shut(user_display);
+
+		user_display = allegro_create(user_display, WIDTH_G, HEIGHT_G, modo);
+		graph(&ticksTaken[0], modo2_var, WIDTH_G, HEIGHT_G, user_display);
+		//graph(grapharray, max_robottts, WIDTH_G, HEIGHT_G, user_display);
+		al_rest(5.0);
+		allegro_shut(user_display);
 
 
 	}
