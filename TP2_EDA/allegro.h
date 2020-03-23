@@ -18,7 +18,7 @@
  /*******************************************************************************
   * ENUMERATIONS AND STRUCTURES AND TYPEDEFS
   ******************************************************************************/
-#define COMICSANS "comici.ttf"
+#define COMICSANS "font2.ttf"
 #define WIDTH_G 1500
 #define HEIGHT_G 1000
 

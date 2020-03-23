@@ -19,8 +19,25 @@ int main(int argc, char** argv)
 	user_t Simulation_data;
 
 	/* VALID KEYS: -robots -modo -ancho -alto */
+	char test6a[] = "-robots";
+	char test6b[] = "10";
+	char test6c[] = "-alto";
+	char test6d[] = "20";
+	char test6e[] = "-ancho";
+	char test6f[] = "20";
+	char test6g[] = "-modo";
+	char test6h[] = "2";
 
-	if (parseCmdLine(argc, argv, parseCallback, &Simulation_data))
+	argv[1] = test6a;
+	argv[2] = test6b;
+	argv[3] = test6c;
+	argv[4] = test6d;
+	argv[5] = test6e;
+	argv[6] = test6f;
+	argv[7] = test6g;
+	argv[8] = test6h;
+
+	if (parseCmdLine(9, argv, parseCallback, &Simulation_data))
 	{
 		unsigned int tickTemp, width, height, modo, robot_count;
 		srand(time(NULL));
@@ -71,7 +88,7 @@ int main(int argc, char** argv)
 				}
 				freeSim(simulation);
 
-				ticksTaken[modo2_var - 1] = tickTemp / 1000.0;			//Promedio de las 1000 simulaciones
+				ticksTaken[modo2_var - 1] = (tickTemp / 1000.0);			//Promedio de las 1000 simulaciones
 				printf("%f\n", ticksTaken[modo2_var - 1]);
 
 				if (modo2_var > 2)
@@ -90,7 +107,7 @@ int main(int argc, char** argv)
 			user_display = allegro_create(user_display, WIDTH_G, HEIGHT_G, modo);
 			graph(&ticksTaken[0], modo2_var, WIDTH_G, HEIGHT_G, user_display);
 			//graph(grapharray, max_robottts, WIDTH_G, HEIGHT_G, user_display);
-			al_rest(5.0);
+			al_rest(10.0);
 			allegro_shut(user_display);
 
 

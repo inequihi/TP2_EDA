@@ -85,7 +85,7 @@ void update_piso(Simulacion_t* psim)
 {
 	al_flip_display();
 	unsigned int dimension;
-	if ((psim->robotCount) < 60)
+	if ((psim->robotCount) < 50)
 	{
 		dimension = (psim->height) * (psim->width);
 		if (dimension < 1200 && dimension >= 800)
@@ -140,18 +140,18 @@ void graph(double* array, unsigned int max, unsigned int width, unsigned int hei
 
 	//y axis
 	unsigned int graph_var;
-	al_draw_line(0.1 * width, 0.9 * height, 0.1 * width, 0.05 * height, al_map_rgb(255, 0, 0), 4);			//al_draw_line(20, 20, (array[0].cantidad_robots) * (0.1), 20, al_map_rgb(0, 0, 0), 4);
+	al_draw_line(0.1 * width, 0.9 * height, 0.1 * width, 0.05 * height, al_map_rgb(255, 0, 0), 4);			
 	al_draw_filled_triangle(0.1 * width, 0.04 * height, 0.09 * width, 0.09 * height, 0.11 * width, 0.09 * height, al_map_rgb(255, 0, 0));
 
 	//labels
-	comic_sans = set_font(30);
+	comic_sans = set_font(50);
 
 	al_draw_textf(comic_sans, al_map_rgb(0, 0, 0), 0.37 * width, 0.95 * height, 0, "ROBOTS");
-	al_draw_textf(comic_sans, al_map_rgb(255, 0, 0), 0.02 * width, 0.5 * height, 0, "TICK");
-	al_draw_textf(comic_sans, al_map_rgb(255, 0, 0), 0.01 * width, 0.55 * height, 0, "COUNT");
+	al_draw_textf(comic_sans, al_map_rgb(255, 0, 0), 0.007 * width, 0.5 * height, 0, "TICK");
+	al_draw_textf(comic_sans, al_map_rgb(255, 0, 0), 0.007 * width, 0.55 * height, 0, "COUNT");
 
 
-	comic_sans = set_font(20);
+	comic_sans = set_font(25);
 	al_draw_textf(comic_sans, al_map_rgb(0, 0, 0), width * 0.1, height * 0.92, ALLEGRO_ALIGN_CENTRE, "%u", 0);
 	al_draw_textf(comic_sans, al_map_rgb(0, 0, 0), width * 0.5, height * 0.92, ALLEGRO_ALIGN_CENTER, "%u", max / 2);
 	al_draw_textf(comic_sans, al_map_rgb(0, 0, 0), width * 0.9, height * 0.92, ALLEGRO_ALIGN_CENTER, "%u", max);
@@ -159,7 +159,7 @@ void graph(double* array, unsigned int max, unsigned int width, unsigned int hei
 
 	//Imprimir barras
 	double escala_x = (0.9 * width - 0.1 * width) / max;
-	double escala_y = (double)((0.9 * height - 0.1 * height) / 50);   //Divido tamaño del eje y entre el maximo valor de ticks
+	double escala_y = (double)((0.9 * height - 0.1 * height) / array[0]);   //Divido tamaño del eje y entre el maximo valor de ticks
 
 	al_draw_textf(comic_sans, al_map_rgb(255, 0, 0), width * 0.09, height * 0.87, ALLEGRO_ALIGN_CENTER, "%0.1d", 0.0);
 	al_draw_textf(comic_sans, al_map_rgb(255, 0, 0), width * 0.09, height * 0.45, ALLEGRO_ALIGN_CENTER, "%0.1d", array[max/2]);
