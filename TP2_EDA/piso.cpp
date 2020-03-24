@@ -27,7 +27,7 @@ bool floorIsClean(Piso_t * p,unsigned int width,unsigned int height) {
 	for (i = 0; i < width && state; i++) {
 		for (j = 0; j < height && state; j++) {
 
-			if ((getBaldosa(p->baldosas_arr, i, j, width))->estado == SUCIO) {
+			if ((getBaldosa(p->baldosas_arr, j, i, width))->estado == SUCIO) {
 				state = false;
 			}
 
@@ -39,7 +39,7 @@ bool floorIsClean(Piso_t * p,unsigned int width,unsigned int height) {
 Baldosa_t* getBaldosa(Baldosa_t* pbald, unsigned int col, unsigned int fil, unsigned int width)
 {
 
-	return &pbald[(fil*width) + col];
+	return &pbald[(fil) + (col*width)];
 }
 
 void freeFloor(Piso_t* p)
