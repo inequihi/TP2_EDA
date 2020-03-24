@@ -23,7 +23,8 @@ typedef struct
  * FUNCTION PROTOTYPES WITH GLOBAL SCOPE
  ******************************************************************************/
 
-Robot_t* createRobots(unsigned int count, unsigned int height, unsigned int width);
+Robot_t* createRobots(unsigned int count, unsigned int height, unsigned int width, Piso_t* p);
+
 
 void freeRobots(Robot_t* frobots);
 

@@ -8,7 +8,7 @@
 #define PI 3.14159265
 using namespace std;
 
-Robot_t* createRobots(unsigned int count, unsigned int height, unsigned int width)
+Robot_t* createRobots(unsigned int count, unsigned int height, unsigned int width, Piso_t* p)
 {
 	unsigned int var_robots;
 	Robot_t* robs = (Robot_t *) malloc(count * sizeof(Robot_t));
@@ -20,17 +20,24 @@ Robot_t* createRobots(unsigned int count, unsigned int height, unsigned int widt
 			robs[var_robots].y = (rand() % height) + ((float)(rand() % 10) / 10);
 			robs[var_robots].direccion = rand() % 360;
 
-			/* Asegurarnos que en la siguiente juaga a la inicial no se nos salgan del tablero
-			   Luego de la primer jugada esta condición la valida moveRobot(...) */
-
-			while (getNextMove('X', robs[var_robots].x, robs[var_robots].direccion) < 0 ||
-				getNextMove('X', robs[var_robots].x, robs[var_robots].direccion) > width ||
-				getNextMove('Y', robs[var_robots].y, robs[var_robots].direccion) < 0 ||
-				getNextMove('Y', robs[var_robots].y, robs[var_robots].direccion) > height
-				)
-			{
-				robs[var_robots].direccion = rand() % 360;
+			/* Limpio baldozas donde coloco mis Robots */
+			if (height == 1 && width == 1) {
+				// si tengo el caso de 1 sola baldosa si o si mis robots van a apuntar afuera
 			}
+			else
+			{ //Sino busco efectivamente que apunten adentro
+				while (getNextMove('X', robs[var_robots].x, robs[var_robots].direccion) < 0 ||
+					getNextMove('X', robs[var_robots].x, robs[var_robots].direccion) > width ||
+					getNextMove('Y', robs[var_robots].y, robs[var_robots].direccion) < 0 ||
+					getNextMove('Y', robs[var_robots].y, robs[var_robots].direccion) > height
+					)
+				{
+					robs[var_robots].direccion = rand() % 360;
+				}
+			}
+
+			Baldosa_t* b = getBaldosa(p->baldosas_arr, floor(robs[var_robots].y), floor(robs[var_robots].x), width);
+			b->estado = LIMPIO;
 		}
 	}
 	else
@@ -76,10 +83,8 @@ void moveRobot(Robot_t* moving_rob, unsigned int width, unsigned int height, Pis
 	moving_rob->y = newY;
 	moving_rob->direccion = newDirection;
 
-	/* Luego de moverme limpio la baldosa */
 	Baldosa_t* b = getBaldosa(p->baldosas_arr, floor(newY), floor(newX), width);
 	b->estado = LIMPIO;
-	//cout << "TEST IN ROBOTS CPP: " << b->estado << floor(newX) << floor(newY) << endl;
 }
 
 float getNextMove(char cord, float val, int direccion) {

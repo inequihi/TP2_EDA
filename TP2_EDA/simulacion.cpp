@@ -9,11 +9,11 @@ Simulacion_t* createSim(unsigned int count, unsigned int height, unsigned int wi
 	psim = (Simulacion_t*)malloc(sizeof(Simulacion_t));
 	if (psim != NULL)
 	{
-		psim->piso = (Piso_t*)malloc(sizeof(Piso_t)*1000);
+		psim->piso = (Piso_t*)malloc(sizeof(Piso_t));
 		psim->piso->baldosas_arr = createFloor(height, width);
 		if (psim->piso->baldosas_arr != NULL)
 		{
-			Robot_t* User_robs = createRobots(count, height, width);
+			Robot_t* User_robs = createRobots(count, height, width, psim->piso);
 			if (User_robs != NULL)
 			{
 				psim->robs = User_robs;

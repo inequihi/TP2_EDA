@@ -29,7 +29,6 @@ bool floorIsClean(Piso_t * p,unsigned int width,unsigned int height) {
 
 			if ((getBaldosa(p->baldosas_arr, i, j, width))->estado == SUCIO) {
 				state = false;
-
 			}
 
 		}
