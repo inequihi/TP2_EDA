@@ -14,25 +14,7 @@ using namespace std;
 int main(int argc, char** argv)
 {
 	user_t Simulation_data;
-	char test6a[] = "-robots";
-	char test6b[] = "10";
-	char test6c[] = "-alto";
-	char test6d[] = "20";
-	char test6e[] = "-ancho";
-	char test6f[] = "20";
-	char test6g[] = "-modo";
-	char test6h[] = "1";
-
-	argv[1] = test6a;
-	argv[2] = test6b;
-	argv[3] = test6c;
-	argv[4] = test6d;
-	argv[5] = test6e;
-	argv[6] = test6f;
-	argv[7] = test6g;
-	argv[8] = test6h;
-
-	if (parseCmdLine(9, argv, parseCallback, &Simulation_data))
+	if (parseCmdLine(argc, argv, parseCallback, &Simulation_data))
 	{
 		unsigned int width, height, modo, robot_count;
 		double tickTemp=0;
