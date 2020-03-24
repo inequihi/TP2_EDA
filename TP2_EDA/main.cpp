@@ -18,9 +18,10 @@ int main(int argc, char** argv)
 {
 	user_t Simulation_data;
 
-	if (parseCmdLine(9, argv, parseCallback, &Simulation_data))
+	if (parseCmdLine(argc, argv, parseCallback, &Simulation_data))
 	{
-		unsigned int tickTemp, width, height, modo, robot_count;
+		unsigned int width, height, modo, robot_count;
+		double tickTemp=0;
 		srand(time(NULL));
 
 		robot_count = Simulation_data.cant_robots;
@@ -32,7 +33,6 @@ int main(int argc, char** argv)
 
 		if (modo == MODO1)
 		{
-
 			Simulacion_t* simulation = createSim(robot_count, height, width, modo);
 
 			user_display = allegro_create(user_display, width, height, modo);
@@ -48,7 +48,6 @@ int main(int argc, char** argv)
 		{
 			bool modo2_done = false;
 			double ticksTaken[400] = { 0.0 };
-			double tickTemp = 0;
 			unsigned int modo2_var;
 
 
@@ -56,11 +55,11 @@ int main(int argc, char** argv)
 			{
 				unsigned int i = 0;
 				Simulacion_t* simulation = createSim(modo2_var, height, width, modo);
-				for (tickTemp = 0.0; i < 1000; i++)
+				for (tickTemp = 0; i < 1000; i++)
 				{
 					if (simulation != NULL)
 					{
-						tickTemp += (double)simulate(simulation);
+						tickTemp += simulate(simulation);
 					}
 					else
 					{
@@ -86,7 +85,7 @@ int main(int argc, char** argv)
 			}
 
 			user_display = allegro_create(user_display, WIDTH_G, HEIGHT_G, modo);
-			graph(&ticksTaken[0], modo2_var, WIDTH_G, HEIGHT_G, user_display);
+			graph(&ticksTaken[0], modo2_var, WIDTH_G, HEIGHT_G, user_display,width,height);
 			//graph(grapharray, max_robottts, WIDTH_G, HEIGHT_G, user_display);
 			al_rest(10.0);
 			allegro_shut(user_display);

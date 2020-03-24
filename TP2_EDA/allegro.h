@@ -41,7 +41,7 @@ ALLEGRO_DISPLAY* allegro_create(ALLEGRO_DISPLAY* display, unsigned int width, un
 
 bool allegro_init(void);
 void allegro_shut(ALLEGRO_DISPLAY* display);
-void graph(double* array, unsigned int max, unsigned int width, unsigned int height, ALLEGRO_DISPLAY* display);
+void graph(double* array, unsigned int max, unsigned int width, unsigned int height, ALLEGRO_DISPLAY* display, unsigned int width2, unsigned int height2);
 void update_piso(Simulacion_t* psim);
 void print_piso(Simulacion_t* psim);
 

@@ -27,7 +27,7 @@ DEFINE
 #define ALTO 3
 #define MAXKEYNUMBER 4
 
-#define MAXALTO 70
+#define MAXALTO 100
 #define MAXANCHO 70
 #define MAXROBOTS 150
 

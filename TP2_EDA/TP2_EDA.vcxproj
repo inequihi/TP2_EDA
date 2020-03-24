@@ -185,6 +185,7 @@
   </ItemGroup>
   <ItemGroup>
     <Font Include="comici.ttf" />
+    <Font Include="font2.TTF" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

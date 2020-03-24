@@ -24,7 +24,7 @@ int parseCmdLine(int argC, char* argV[], pCallback parseCallback, user_t* userDa
             break;
         }
     }
-    if (i > MAXUSERDATA)
+    if (i > MAXUSERDATA || i<=1)
         res = ERROR;
 
     return res;         // Devuelve el resultado de la suma.

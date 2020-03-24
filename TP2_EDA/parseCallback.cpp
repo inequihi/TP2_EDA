@@ -72,7 +72,7 @@ int checkvalue(char* val, int keyid)                    //verifica que los valor
             }
             i++;
         }
-        if (i > MAXALTO) 
+        if ((atoi(val))> MAXALTO) 
         {
             let = ERROR;
             break;
@@ -88,6 +88,11 @@ int checkvalue(char* val, int keyid)                    //verifica que los valor
                 break;
             }
             i++;
+        }
+        if ((atoi(val)) > MAXANCHO)
+        {
+            let = ERROR;
+            break;
         }
 
         if (i > MAXANCHO)

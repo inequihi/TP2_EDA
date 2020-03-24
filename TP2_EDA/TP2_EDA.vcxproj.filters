@@ -64,6 +64,9 @@
     <Font Include="comici.ttf">
       <Filter>Resource Files</Filter>
     </Font>
+    <Font Include="font2.TTF">
+      <Filter>Resource Files</Filter>
+    </Font>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
