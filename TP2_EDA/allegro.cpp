@@ -1,37 +1,44 @@
 #include "allegro.h"
 #include "piso.h"
 #include "robot.h"
-ALLEGRO_DISPLAY* allegro_create(ALLEGRO_DISPLAY* display, unsigned int width, unsigned int height, unsigned int modo)
-{
-	display = (ALLEGRO_DISPLAY*)malloc(sizeof(ALLEGRO_DISPLAY*));
 
-	if (display != NULL)
-	{
-		if (!allegro_init())
-		{
-			printf("ERROR INICIALIZANDO ALLEGRO \n");
-			return NULL;
-		}
-		switch (modo) 
+void allegro_interface_init(allegro_t* allegro_interface)
+{
+		allegro_interface->font = NULL;
+		allegro_interface->user_display = NULL;
+		allegro_interface->event_queue = NULL;
+}
+
+bool allegro_create(allegro_t* allegro_interface, unsigned int width, unsigned int height, unsigned int modo)
+{
+	allegro_interface->event_queue = al_create_event_queue();
+	if (!allegro_interface->event_queue) {
+		fprintf(stderr, "failed to create event_queue!\n");
+		return ERROR;
+	}
+
+	switch (modo) 
 		{
 			case MODO1:
-				display = al_create_display(TAMAÑOBAL * width, TAMAÑOBAL * height);
+				allegro_interface->user_display = al_create_display(TAMAÑOBAL * width, TAMAÑOBAL * height);
 				break;
 			case MODO2:
-				display = al_create_display(width, height);
+				allegro_interface->user_display = al_create_display(width, height);
 				break; 
 		}
 
-		if (!display)
+		if (!allegro_interface->user_display)
 		{
 			printf("ERROR CREANDO DISPLAY \n");
-			return NULL;
+			return ERROR;
 		}		
-	}
-	return display;
+		else
+		{	
+			return OK;
+		}
 }
 
-bool allegro_init()
+bool allegro_init(allegro_t *allegro_interface)
 {
 	if (al_init())
 	{
@@ -43,13 +50,7 @@ bool allegro_init()
 				{
 					if (al_init_ttf_addon())
 					{
-						if (al_init_image_addon())
-						{
-							return true;
-						}
-						else
-							printf("ERROR INICIALIZANDO IMAGE ADDON");
-						al_shutdown_image_addon();
+						return true;
 					}
 					else
 						printf("ERROR INICIALIZANDO TTF ADDON");
@@ -67,19 +68,20 @@ bool allegro_init()
 			printf("ERROR INICIALIZANDO PRIMITIVES ADDON \n");
 	}
 	else
-		printf("ERROR INICIALIZANDO ALLEGRO \n");
+		printf("ERROR AL_INIT \n");
 	return false;
 }
 
-void allegro_shut(ALLEGRO_DISPLAY* display)
+void allegro_shut(allegro_t * allegro_interface)
 {
 	
-	al_shutdown_ttf_addon();
+	
 	al_shutdown_font_addon();
 	al_shutdown_primitives_addon();
-	al_shutdown_image_addon();
-	al_destroy_display(display);
+	al_destroy_display(allegro_interface->user_display);
+	al_destroy_event_queue(allegro_interface->event_queue);
 	al_uninstall_keyboard();
+	al_shutdown_ttf_addon();
 }
 
 void update_piso(Simulacion_t* psim)
@@ -126,11 +128,10 @@ void print_piso(Simulacion_t* psim)
 }
 
 
-void graph(double* array, unsigned int max, unsigned int width, unsigned int height, ALLEGRO_DISPLAY* display, unsigned int width2, unsigned int height2)
+void graph(double* array, unsigned int max, unsigned int width, unsigned int height, allegro_t* allegro_interface, unsigned int width2, unsigned int height2)
 //Funcion que recibe un arreglo con los 1000 variaciones para robots y el tic correspondiente a cada uno. Estructura se encuentra en simulacion.h
 {
 	al_clear_to_color(al_map_rgb(255, 255, 255));
-	ALLEGRO_FONT* comic_sans;
 	int axis_size_y = width * 0.80;
 	int axis_size_x = height * 0.80;
 
@@ -145,58 +146,71 @@ void graph(double* array, unsigned int max, unsigned int width, unsigned int hei
 	al_draw_filled_triangle(0.1 * width, 0.04 * height, 0.09 * width, 0.09 * height, 0.11 * width, 0.09 * height, al_map_rgb(255, 0, 0));
 
 	//labels
-	comic_sans = set_font(45);
-	al_draw_textf(comic_sans, al_map_rgb(0, 0, 0), 0.4 * width, 0.05 * height, 0, "CALCULATIONS FOR BOARD SIZE %u x %u",width2,height2 );
-	al_draw_textf(comic_sans, al_map_rgb(0, 0, 0), 0.37 * width, 0.95 * height, 0, "ROBOTS");
-	al_draw_textf(comic_sans, al_map_rgb(255, 0, 0), 0.007 * width, 0.5 * height, 0, "TICK");
-	al_draw_textf(comic_sans, al_map_rgb(255, 0, 0), 0.007 * width, 0.55 * height, 0, "COUNT");
-	al_destroy_font(comic_sans);
+	allegro_interface->font = set_font(45);
+	al_draw_textf(allegro_interface->font, al_map_rgb(0, 0, 0), 0.4 * width, 0.05 * height, 0, "CALCULATIONS FOR BOARD SIZE %u x %u",width2,height2 );
+	al_draw_textf(allegro_interface->font, al_map_rgb(0, 0, 0), 0.37 * width, 0.95 * height, 0, "ROBOTS");
+	al_draw_textf(allegro_interface->font, al_map_rgb(255, 0, 0), 0.007 * width, 0.5 * height, 0, "TICK");
+	al_draw_textf(allegro_interface->font, al_map_rgb(255, 0, 0), 0.007 * width, 0.55 * height, 0, "COUNT");
+	al_destroy_font(allegro_interface->font);
 
-	comic_sans = set_font(25);
-	al_draw_textf(comic_sans, al_map_rgb(0, 0, 0), width * 0.1, height * 0.92, ALLEGRO_ALIGN_CENTRE, "%u", 0);
-	al_draw_textf(comic_sans, al_map_rgb(0, 0, 0), width * 0.5, height * 0.92, ALLEGRO_ALIGN_CENTER, "%u", max / 2);
-	al_draw_textf(comic_sans, al_map_rgb(0, 0, 0), width * 0.9, height * 0.92, ALLEGRO_ALIGN_CENTER, "%u", max);
+	allegro_interface->font = set_font(25);
+	al_draw_textf(allegro_interface->font, al_map_rgb(0, 0, 0), width * 0.1, height * 0.92, ALLEGRO_ALIGN_CENTRE, "%u", 0);
+	al_draw_textf(allegro_interface->font, al_map_rgb(0, 0, 0), width * 0.5, height * 0.92, ALLEGRO_ALIGN_CENTER, "%u", max / 2);
+	al_draw_textf(allegro_interface->font, al_map_rgb(0, 0, 0), width * 0.9, height * 0.92, ALLEGRO_ALIGN_CENTER, "%u", max);
 
 	//Imprimir barras
 	double escala_x = (0.9 * width - 0.1 * width) / max;
 	double escala_y = (double)((0.8 * height - 0.1 * height) / array[0]);   //Divido tamaño del eje y entre el maximo valor de ticks
 
-	al_draw_textf(comic_sans, al_map_rgb(255, 0, 0), width * 0.075, height * 0.87, ALLEGRO_ALIGN_CENTER, "%.1f", 0.0);
-	al_draw_textf(comic_sans, al_map_rgb(255, 0, 0), width * 0.075, height * 0.45, ALLEGRO_ALIGN_CENTER, "%.1f", array[max/2]);
-	al_draw_textf(comic_sans, al_map_rgb(255, 0, 0), width * 0.075, height * 0.1, ALLEGRO_ALIGN_CENTER, "%.1f", array[0]);
-	al_destroy_font(comic_sans);
+	al_draw_textf(allegro_interface->font, al_map_rgb(255, 0, 0), width * 0.075, height * 0.87, ALLEGRO_ALIGN_CENTER, "%.1f", 0.0);
+	al_draw_textf(allegro_interface->font, al_map_rgb(255, 0, 0), width * 0.075, height * 0.45, ALLEGRO_ALIGN_CENTER, "%.1f", array[max/2]);
+	al_draw_textf(allegro_interface->font, al_map_rgb(255, 0, 0), width * 0.075, height * 0.1, ALLEGRO_ALIGN_CENTER, "%.1f", array[0]);
+	al_destroy_font(allegro_interface->font);
 
 	for (graph_var = 0; graph_var < max; graph_var++)
 	{
 		al_draw_line(0.1 * width + (((double)graph_var) + 1) * escala_x, 0.9 * height, 0.1 * width + (((double)graph_var + 1) * escala_x), 0.8*height - ((array[graph_var])*escala_y) , al_map_rgb(0, 0,0), 3);			
 	}
-	
 	al_flip_display();
+
+	allegro_wait4exit(allegro_interface);
 }
 
+void allegro_wait4exit(allegro_t* allegro_interface)
+{
+	ALLEGRO_EVENT ev;
+	al_register_event_source(allegro_interface->event_queue, al_get_keyboard_event_source());
+	do {                                    //Mientras no se presione 'ESC' buscamos un evento de la cola de eventos.
+		al_flush_event_queue(allegro_interface->event_queue);
+		al_wait_for_event(allegro_interface->event_queue, &ev);
+	} while (ev.type == ALLEGRO_EVENT_KEY_DOWN && ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE);
+}
 
-void al_final(double ticksTotal, ALLEGRO_DISPLAY*display)
+void allegro_results(double ticksTotal, allegro_t* allegro_interface)
 {
 
-	al_resize_display(display, 700, 700);
+	al_resize_display(allegro_interface->user_display, 700, 700);
 	al_clear_to_color(al_map_rgb(0, 255, 255));
-	ALLEGRO_FONT* comic_sans;
 	int width, height;
-	width = al_get_display_width(display);
-	height = al_get_display_height(display);
+	width = al_get_display_width(allegro_interface->user_display);
+	height = al_get_display_height(allegro_interface->user_display);
 
-	comic_sans = set_font(60);
-	al_draw_textf(comic_sans, al_map_rgb(0, 0, 0), 0.5 * width, 0.3 * height, ALLEGRO_ALIGN_CENTER, "TOTAL TICKS");
-	al_destroy_font(comic_sans);
-	comic_sans = set_font(70);
-	al_draw_textf(comic_sans, al_map_rgb(0, 0, 0), 0.5 * width, 0.5 * height, ALLEGRO_ALIGN_CENTER, "%.0f",ticksTotal);
+	allegro_interface->font = set_font(60);
+	al_draw_textf(allegro_interface->font, al_map_rgb(0, 0, 0), 0.5 * width, 0.3 * height, ALLEGRO_ALIGN_CENTER, "TOTAL TICKS");
+	al_destroy_font(allegro_interface->font);
+
+	allegro_interface->font = set_font(70);
+	al_draw_textf(allegro_interface->font, al_map_rgb(0, 0, 0), 0.5 * width, 0.5 * height, ALLEGRO_ALIGN_CENTER, "%.0f",ticksTotal);
+	al_destroy_font(allegro_interface->font);
+	
+	allegro_interface->font = set_font(25);
+	al_draw_textf(allegro_interface->font, al_map_rgb(0, 0, 0), 0.5 * width, 0.2 * height, ALLEGRO_ALIGN_CENTER, "PRESIONE 'ESC' PARA SALIR SIMULACION");
+	al_destroy_font(allegro_interface->font);
+
 	al_flip_display();
-	al_rest(5);
-	al_destroy_font(comic_sans);
 }
 
 ALLEGRO_FONT* set_font(unsigned int size)
 {
 	return al_load_ttf_font(COMICSANS, size, 0);
 }
-

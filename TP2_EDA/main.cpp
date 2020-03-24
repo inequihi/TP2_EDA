@@ -9,16 +9,30 @@
 #include <time.h>
 #include <iostream>
 
-/* DEBUG FUNCTIONS FOR DEVELOPMENT */
-void printAllRobots(Robot_t* robs, int count);
-void printFloor(Piso_t p, unsigned int height, unsigned int width);
 using namespace std;
 
 int main(int argc, char** argv)
 {
 	user_t Simulation_data;
+	char test6a[] = "-robots";
+	char test6b[] = "10";
+	char test6c[] = "-alto";
+	char test6d[] = "20";
+	char test6e[] = "-ancho";
+	char test6f[] = "20";
+	char test6g[] = "-modo";
+	char test6h[] = "1";
 
-	if (parseCmdLine(argc, argv, parseCallback, &Simulation_data))
+	argv[1] = test6a;
+	argv[2] = test6b;
+	argv[3] = test6c;
+	argv[4] = test6d;
+	argv[5] = test6e;
+	argv[6] = test6f;
+	argv[7] = test6g;
+	argv[8] = test6h;
+
+	if (parseCmdLine(9, argv, parseCallback, &Simulation_data))
 	{
 		unsigned int width, height, modo, robot_count;
 		double tickTemp=0;
@@ -29,22 +43,37 @@ int main(int argc, char** argv)
 		height = Simulation_data.alto;
 		modo = Simulation_data.modo;
 
-		ALLEGRO_DISPLAY* user_display = NULL;
+		allegro_t allegro_interface;
 
-		if (modo == MODO1)
+		allegro_interface_init(&allegro_interface);
+
+		if (!allegro_init(&allegro_interface))
 		{
-			Simulacion_t* simulation = createSim(robot_count, height, width, modo);
-
-			user_display = allegro_create(user_display, width, height, modo);
-
-			tickTemp = simulate(simulation);
-
-			al_final(tickTemp,user_display);
-			freeSim(simulation);
-			allegro_shut(user_display);
+			printf("ERROR INICIALIZANDO ALLEGRO \n");
+			return NULL;
 		}
 
-		else //MODO 2
+		else if (modo == MODO1)
+		{
+			Simulacion_t* simulation = createSim(robot_count, height, width, modo);
+		
+
+			if (allegro_create(&allegro_interface, width, height, modo))
+			{
+
+				tickTemp = simulate(simulation);
+
+				allegro_results(tickTemp, &allegro_interface);
+				allegro_wait4exit(&allegro_interface);
+				freeSim(simulation);
+				allegro_shut(&allegro_interface);
+
+			}
+			else
+				printf("ERROR CREANDO ALLEGRO");
+		}
+
+		else if (modo == MODO2) //MODO 2
 		{
 			bool modo2_done = false;
 			double ticksTaken[400] = { 0.0 };
@@ -82,63 +111,16 @@ int main(int argc, char** argv)
 					}
 				}
 			}
+			if (allegro_create(&allegro_interface, WIDTH_G, HEIGHT_G, modo))
+			{
+				graph(&ticksTaken[0], modo2_var, WIDTH_G, HEIGHT_G, &allegro_interface, width, height);
+				allegro_wait4exit(&allegro_interface);
+				allegro_shut(&allegro_interface);
 
-			user_display = allegro_create(user_display, WIDTH_G, HEIGHT_G, modo);
-			graph(&ticksTaken[0], modo2_var, WIDTH_G, HEIGHT_G, user_display,width,height);
-			al_rest(10.0);
-			allegro_shut(user_display);
-
-
+			}
+			else
+				printf("ERROR CREANDO ALLEGRO");
 		}
-
 	}
-
-	
-	/*// CHECKING IF FUNCTIONS WORK AS INTENDED
-	Robot_t* robs = createRobots(ROBOT_COUNT, height, width);
-	printAllRobots(robs, ROBOT_COUNT); //Check robots creation
-
-	Piso_t p;
-	p.baldosas_arr = createFloor(height, width);
-	printFloor(p, height, width); // Check floor creation using getBaldosa
-
-	cout << "Robot " << 0 << " is in (" << robs[0].x << ", " << robs[0].y << ")" << " direction " << robs[0].direccion << endl;
-	moveRobot(&robs[0], width, height, &p);
-	cout << "Moving robot 0..." << endl;
-	cout << "Robot " << 0 << " is in (" << robs[0].x << ", " << robs[0].y << ")" << " direction " << robs[0].direccion << endl;
-	printFloor(p, height, width); // Check Updated baldosa
-
-	ALLEGRO_DISPLAY* user_display = NULL;*/
 	return 0;
 }
-
-
-void printAllRobots(Robot_t* robs, int count) {
-	int k = 0;
-	for (k = 0; k < count; k++) {
-		cout << "Robot " << k << " is in (" << robs[k].x << ", " << robs[k].y << ")" << " direction " << robs[k].direccion << endl;
-	}
-}
-
-void printFloor(Piso_t p, unsigned int height, unsigned int width) {
-	// 0 IGUAL SUCIA, 1 LIMPIA
-	unsigned int i, j;
-	for (i = 0; i < width; i++) {
-		// Para da columna;
-		for (j = 0; j < height; j++) {
-			// Imprimo la columna
-			cout << getBaldosa(p.baldosas_arr, i, j, width)->estado << " ";
-		}
-		cout << endl;
-	}
-}
-
-
-/*
-#define lblue al_map_rgb(0, 255, 255);
-#define yellow al_map_rgb(255, 255, 0);
-#define violeta al_map_rgb(128, 0, 128);
-#define verde al_map_rgb(0, 255, 0);
-#define azul al_map_rgb(0, 0, 255);
-#define naranza al_map_rgb(255, 128, 0);
-*/

@@ -7,9 +7,7 @@
 
 #include "robot.h"
 #include "piso.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <iostream>
+#include "prototipos.h"
 #include <math.h> 
 
 /*******************************************************************************
