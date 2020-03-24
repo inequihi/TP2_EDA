@@ -39,7 +39,7 @@ int main(int argc, char** argv)
 
 			tickTemp = simulate(simulation);
 
-			cout << "clean in " << tickTemp << endl;
+			al_final(tickTemp,user_display);
 			freeSim(simulation);
 			allegro_shut(user_display);
 		}
@@ -69,7 +69,6 @@ int main(int argc, char** argv)
 				freeSim(simulation);
 
 				ticksTaken[modo2_var - 1] = (tickTemp / 1000.0);			//Promedio de las 1000 simulaciones
-				printf("%f\n", ticksTaken[modo2_var - 1]);
 
 				if (modo2_var > 2)
 				{
@@ -86,7 +85,6 @@ int main(int argc, char** argv)
 
 			user_display = allegro_create(user_display, WIDTH_G, HEIGHT_G, modo);
 			graph(&ticksTaken[0], modo2_var, WIDTH_G, HEIGHT_G, user_display,width,height);
-			//graph(grapharray, max_robottts, WIDTH_G, HEIGHT_G, user_display);
 			al_rest(10.0);
 			allegro_shut(user_display);
 

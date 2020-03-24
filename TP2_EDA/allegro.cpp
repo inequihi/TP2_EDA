@@ -173,7 +173,26 @@ void graph(double* array, unsigned int max, unsigned int width, unsigned int hei
 }
 
 
+void al_final(double ticksTotal, ALLEGRO_DISPLAY*display)
+{
+
+	al_resize_display(display, 700, 700);
+	al_clear_to_color(al_map_rgb(0, 255, 255));
+	ALLEGRO_FONT* comic_sans;
+	int width, height;
+	width = al_get_display_width(display);
+	height = al_get_display_height(display);
+
+	comic_sans = set_font(60);
+	al_draw_textf(comic_sans, al_map_rgb(0, 0, 0), 0.5 * width, 0.3 * height, ALLEGRO_ALIGN_CENTER, "TOTAL TICKS");
+	comic_sans = set_font(70);
+	al_draw_textf(comic_sans, al_map_rgb(0, 0, 0), 0.5 * width, 0.5 * height, ALLEGRO_ALIGN_CENTER, "%.0f",ticksTotal);
+	al_flip_display();
+	al_rest(5);
+}
+
 ALLEGRO_FONT* set_font(unsigned int size)
 {
 	return al_load_ttf_font(COMICSANS, size, 0);
 }
+
