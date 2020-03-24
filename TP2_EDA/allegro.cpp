@@ -73,12 +73,13 @@ bool allegro_init()
 
 void allegro_shut(ALLEGRO_DISPLAY* display)
 {
+	
 	al_shutdown_ttf_addon();
 	al_shutdown_font_addon();
 	al_shutdown_primitives_addon();
 	al_shutdown_image_addon();
 	al_destroy_display(display);
-
+	al_uninstall_keyboard();
 }
 
 void update_piso(Simulacion_t* psim)
@@ -149,7 +150,7 @@ void graph(double* array, unsigned int max, unsigned int width, unsigned int hei
 	al_draw_textf(comic_sans, al_map_rgb(0, 0, 0), 0.37 * width, 0.95 * height, 0, "ROBOTS");
 	al_draw_textf(comic_sans, al_map_rgb(255, 0, 0), 0.007 * width, 0.5 * height, 0, "TICK");
 	al_draw_textf(comic_sans, al_map_rgb(255, 0, 0), 0.007 * width, 0.55 * height, 0, "COUNT");
-
+	al_destroy_font(comic_sans);
 
 	comic_sans = set_font(25);
 	al_draw_textf(comic_sans, al_map_rgb(0, 0, 0), width * 0.1, height * 0.92, ALLEGRO_ALIGN_CENTRE, "%u", 0);
@@ -163,6 +164,7 @@ void graph(double* array, unsigned int max, unsigned int width, unsigned int hei
 	al_draw_textf(comic_sans, al_map_rgb(255, 0, 0), width * 0.075, height * 0.87, ALLEGRO_ALIGN_CENTER, "%.1f", 0.0);
 	al_draw_textf(comic_sans, al_map_rgb(255, 0, 0), width * 0.075, height * 0.45, ALLEGRO_ALIGN_CENTER, "%.1f", array[max/2]);
 	al_draw_textf(comic_sans, al_map_rgb(255, 0, 0), width * 0.075, height * 0.1, ALLEGRO_ALIGN_CENTER, "%.1f", array[0]);
+	al_destroy_font(comic_sans);
 
 	for (graph_var = 0; graph_var < max; graph_var++)
 	{
@@ -185,10 +187,12 @@ void al_final(double ticksTotal, ALLEGRO_DISPLAY*display)
 
 	comic_sans = set_font(60);
 	al_draw_textf(comic_sans, al_map_rgb(0, 0, 0), 0.5 * width, 0.3 * height, ALLEGRO_ALIGN_CENTER, "TOTAL TICKS");
+	al_destroy_font(comic_sans);
 	comic_sans = set_font(70);
 	al_draw_textf(comic_sans, al_map_rgb(0, 0, 0), 0.5 * width, 0.5 * height, ALLEGRO_ALIGN_CENTER, "%.0f",ticksTotal);
 	al_flip_display();
 	al_rest(5);
+	al_destroy_font(comic_sans);
 }
 
 ALLEGRO_FONT* set_font(unsigned int size)

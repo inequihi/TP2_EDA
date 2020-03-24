@@ -23,8 +23,8 @@
 #define HEIGHT_G 1000
 
 #define MAXFPS  50000
-#define FPS 0.5
-#define MINFPS 0.2
+#define FPS 0.2
+#define MINFPS 0.1
 
 #define ESCALA 2
 typedef struct
