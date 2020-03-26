@@ -10,7 +10,6 @@
  * ENUMERATIONS AND STRUCTURES AND TYPEDEFS
  ******************************************************************************/
 
-//ROBOT
 typedef struct
 {
     float x;

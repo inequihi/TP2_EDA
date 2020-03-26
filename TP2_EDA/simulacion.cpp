@@ -50,7 +50,8 @@ unsigned long int simulate(Simulacion_t* psim)
 	{
 		for (var_sim = 0; var_sim < psim->robotCount; var_sim++) {
 
-			moveRobot(&(psim->robs[var_sim]), psim->width, psim->height, psim->piso); //Falta width y height?
+			/* Muevo robot y limpio baldoza. Consultar moveRobot(...) en robot.cpp */
+			moveRobot(&(psim->robs[var_sim]), psim->width, psim->height, psim->piso);
 		}
 		if ((psim->modo) == MODO1)
 		{

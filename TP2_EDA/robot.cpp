@@ -20,12 +20,12 @@ Robot_t* createRobots(unsigned int count, unsigned int height, unsigned int widt
 			robs[var_robots].y = (rand() % height) + ((float)(rand() % 10) / 10);
 			robs[var_robots].direccion = rand() % 360;
 
-			/* Limpio baldozas donde coloco mis Robots */
 			if (height == 1 && width == 1) {
-				// si tengo el caso de 1 sola baldosa si o si mis robots van a apuntar afuera
+				/* si tengo el caso de 1 sola baldosa si o si mis robots van a apuntar afuera 
+				   y ademas con existir al menos 1 robot la baldoza queda limpia en tiempo 0 */
 			}
 			else
-			{ //Sino busco efectivamente que apunten adentro
+			{   /* Caso contrario, busco efectivamente que mi robot apunte inicialmente hacia el interior del piso */
 				while (getNextMove('X', robs[var_robots].x, robs[var_robots].direccion) < 0 ||
 					getNextMove('X', robs[var_robots].x, robs[var_robots].direccion) > width ||
 					getNextMove('Y', robs[var_robots].y, robs[var_robots].direccion) < 0 ||
@@ -36,6 +36,7 @@ Robot_t* createRobots(unsigned int count, unsigned int height, unsigned int widt
 				}
 			}
 
+			/* Limpio baldozas en donde arrancan los robots */
 			Baldosa_t* b = getBaldosa(p->baldosas_arr, floor(robs[var_robots].y), floor(robs[var_robots].x), width);
 			b->estado = LIMPIO;
 		}
@@ -83,6 +84,7 @@ void moveRobot(Robot_t* moving_rob, unsigned int width, unsigned int height, Pis
 	moving_rob->y = newY;
 	moving_rob->direccion = newDirection;
 
+	/* En el mismo movimiento del robot limpio la baldoza en la que caigo */
 	Baldosa_t* b = getBaldosa(p->baldosas_arr, floor(newY), floor(newX), width);
 	b->estado = LIMPIO;
 }

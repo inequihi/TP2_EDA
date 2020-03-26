@@ -38,7 +38,6 @@ bool floorIsClean(Piso_t * p,unsigned int width,unsigned int height) {
 }
 Baldosa_t* getBaldosa(Baldosa_t* pbald, unsigned int col, unsigned int fil, unsigned int width)
 {
-
 	return &pbald[(fil) + (col*width)];
 }
 

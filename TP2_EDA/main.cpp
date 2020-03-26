@@ -55,7 +55,7 @@ int main(int argc, char** argv)
 				printf("ERROR CREANDO ALLEGRO");
 		}
 
-		else if (modo == MODO2) //MODO 2
+		else if (modo == MODO2)
 		{
 			bool modo2_done = false;
 			double ticksTaken[400] = { 0.0 };
@@ -79,7 +79,7 @@ int main(int argc, char** argv)
 				}
 				freeSim(simulation);
 
-				ticksTaken[modo2_var - 1] = (tickTemp / 1000.0);			//Promedio de las 1000 simulaciones
+				ticksTaken[modo2_var - 1] = (tickTemp / 1000.0);	// Promedio de las 1000 simulaciones
 
 				if (modo2_var > 2)
 				{
