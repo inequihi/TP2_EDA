@@ -9,30 +9,32 @@
  * ENUMERATIONS AND STRUCTURES AND TYPEDEFS
  ******************************************************************************/
 
+#define SUCIO false
+#define LIMPIO true
+#define TAMAÑOBAL 20
+
 //BALDOSA
 typedef struct
 {
 	unsigned int estado;				//Limpio o sucio
-}Baldosa_t;
+} Baldosa_t;
 
 //PISO
 typedef struct
 {
-
-	Baldosa_t* balsosas_arr;				//Arreglo de baldosas
-	unsigned int width;
-	unsigned int height;
-
-}Piso_t;
+	Baldosa_t* baldosas_arr;				//Arreglo de baldosas
+} Piso_t;
 
 
 /*******************************************************************************
  * FUNCTION PROTOTYPES WITH GLOBAL SCOPE
  ******************************************************************************/
 
-Piso_t* createFloor(unsigned int height, unsigned int width);
+Baldosa_t* createFloor(unsigned int height, unsigned int width);
 
-Baldosa_t* getBaldosa(Baldosa_t* pbald, unsigned int fil, unsigned int col);
+Baldosa_t* getBaldosa(Baldosa_t* pbald, unsigned int fil, unsigned int col, unsigned int width);
 
 void freeFloor(Piso_t* p);
+
+bool floorIsClean(Piso_t* p, unsigned int width, unsigned int height);
 #endif //PISO_H

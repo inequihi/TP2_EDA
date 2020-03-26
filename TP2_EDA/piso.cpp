@@ -1,28 +1,48 @@
 #include "piso.h"
+#include <stdlib.h>
+#include <stdio.h>
 
-/*
-Piso_t* createFloor(unsigned int height, unsigned int width)
+Baldosa_t* createFloor(unsigned int height, unsigned int width)
 {
-	Piso_t ret = NULL;
-	unsigned int  var_piso;
-	ret = malloc(height * width * sizeof(Baldosa_t));
-	if (ret != NULL)
+	unsigned long int  var_piso;
+	Baldosa_t* baldosa_array = (Baldosa_t*) malloc(height *  sizeof(Baldosa_t)* width);
+	if (baldosa_array != NULL)
 	{
 		for (var_piso = 0; var_piso < (height * width); var_piso++)
-			ret[var_piso] = SUCIO;
+			baldosa_array[var_piso].estado = SUCIO;
 	}
-	return ret;
+	else 
+	{
+		free(baldosa_array);
+		baldosa_array = NULL;
+	}
+	return baldosa_array;
 }
 
+bool floorIsClean(Piso_t * p,unsigned int width,unsigned int height) {
+	
+	unsigned int i, j;
+	bool state = true;
+	
+	for (i = 0; i < width && state; i++) {
+		for (j = 0; j < height && state; j++) {
 
-Baldosa_t* getBaldosa(Baldosa_t* pbald, unsigned int fil, unsigned int col)
+			if ((getBaldosa(p->baldosas_arr, j, i, width))->estado == SUCIO) {
+				state = false;
+			}
+
+		}
+
+	}
+	return state;
+}
+Baldosa_t* getBaldosa(Baldosa_t* pbald, unsigned int col, unsigned int fil, unsigned int width)
 {
-	//pbald[fil][col];
-	//////////////////////
+
+	return &pbald[(fil) + (col*width)];
 }
 
 void freeFloor(Piso_t* p)
 {
-	free(p);
+	free(p->baldosas_arr);
 }
-*/
