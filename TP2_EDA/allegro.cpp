@@ -123,7 +123,7 @@ void allegro_print_piso(Simulacion_t* psim)
 		unsigned int fil = 0;
 		for (fil; fil < (psim->height); fil++) {
 			// Imprimo la columna,
-			if ((getBaldosa(psim->piso->baldosas_arr, fil, col, psim->width)->estado) == SUCIO)
+			if ((getBaldosa(psim->piso, fil, col, psim->width)->estado) == SUCIO)
 			{
 				al_draw_filled_rectangle(col * TAMAÑOBAL, fil * TAMAÑOBAL, (col + 1) * TAMAÑOBAL, (fil + 1) * TAMAÑOBAL, al_map_rgb(200, 200, 200));
 				al_draw_rectangle(col * TAMAÑOBAL, fil * TAMAÑOBAL, (col + 1) * TAMAÑOBAL, (fil + 1) * TAMAÑOBAL, al_map_rgb(0, 0, 0), 0);
@@ -143,7 +143,7 @@ void allegro_print_piso(Simulacion_t* psim)
 }
 
 
-void allegro_graph(double* array, unsigned int max, unsigned int width, unsigned int height, allegro_t* allegro_interface, unsigned int width2, unsigned int height2)
+void allegro_graph(double* array,unsigned int max, unsigned int width, unsigned int height, allegro_t* allegro_interface, unsigned int width2, unsigned int height2)
 //Funcion que recibe un arreglo con los 1000 variaciones para robots y el tic correspondiente a cada uno. Estructura se encuentra en simulacion.h
 {
 	al_clear_to_color(al_map_rgb(255, 255, 255));
@@ -170,11 +170,14 @@ void allegro_graph(double* array, unsigned int max, unsigned int width, unsigned
 
 	allegro_interface->font = set_font(25);
 	al_draw_textf(allegro_interface->font, al_map_rgb(0, 0, 0), 0.4 * width, 0.095 * height, 0, "PRESIONE 'ESC' PARA SALIR");
+	//Valores x robots
 	al_draw_textf(allegro_interface->font, al_map_rgb(0, 0, 0), width * 0.1, height * 0.92, ALLEGRO_ALIGN_CENTRE, "%u", 0);
 	al_draw_textf(allegro_interface->font, al_map_rgb(0, 0, 0), width * 0.5, height * 0.92, ALLEGRO_ALIGN_CENTER, "%u", max / 2);
 	al_draw_textf(allegro_interface->font, al_map_rgb(0, 0, 0), width * 0.9, height * 0.92, ALLEGRO_ALIGN_CENTER, "%u", max);
+
+	//Valores y ticks
 	al_draw_textf(allegro_interface->font, al_map_rgb(255, 0, 0), width * 0.075, height * 0.87, ALLEGRO_ALIGN_CENTER, "%.1f", 0.0);
-	al_draw_textf(allegro_interface->font, al_map_rgb(255, 0, 0), width * 0.075, height * 0.45, ALLEGRO_ALIGN_CENTER, "%.1f", array[max / 2]);
+	al_draw_textf(allegro_interface->font, al_map_rgb(255, 0, 0), width * 0.075, height * 0.45, ALLEGRO_ALIGN_CENTER, "%.1f", array[max/2]);
 	al_draw_textf(allegro_interface->font, al_map_rgb(255, 0, 0), width * 0.075, height * 0.1, ALLEGRO_ALIGN_CENTER, "%.1f", array[0]);
 	al_destroy_font(allegro_interface->font);
 
@@ -184,7 +187,7 @@ void allegro_graph(double* array, unsigned int max, unsigned int width, unsigned
 
 	for (graph_var = 0; graph_var < max; graph_var++)
 	{
-		al_draw_line(0.1 * width + (((double)graph_var) + 1) * escala_x, 0.9 * height, 0.1 * width + (((double)graph_var + 1) * escala_x), 0.8*height - ((array[graph_var])*escala_y) , al_map_rgb(0, 0,0),30);			
+		al_draw_line(0.1 * width + (((double)graph_var) + 1) * escala_x, 0.9 * height, 0.1 * width + (((double)graph_var + 1) * escala_x), 0.8*height - ((array[graph_var])*escala_y) , al_map_rgb(0, 0,0),5);			
 	}
 	al_flip_display();
 

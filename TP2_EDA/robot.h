@@ -5,7 +5,6 @@
 #define ROBOT_H
 
 #include "piso.h"
-
 /*******************************************************************************
  * ENUMERATIONS AND STRUCTURES AND TYPEDEFS
  ******************************************************************************/
@@ -22,12 +21,11 @@ typedef struct
  * FUNCTION PROTOTYPES WITH GLOBAL SCOPE
  ******************************************************************************/
 
-Robot_t* createRobots(unsigned int count, unsigned int height, unsigned int width, Piso_t* p);
+Robot_t* createRobots(unsigned int count, unsigned int height, unsigned int width, Baldosa_t* p);
 
+//void freeRobots(Robot_t* frobots);
 
-void freeRobots(Robot_t* frobots);
-
-void moveRobot(Robot_t* moving_rob, unsigned int width, unsigned int height, Piso_t* p);
+void moveRobot(Robot_t* moving_rob, unsigned int width, unsigned int height, Baldosa_t* p);
 
 float getNextMove(char cord, float val, int direccion);
 

@@ -58,13 +58,17 @@ int main(int argc, char** argv)
 			bool modo2_done = false;
 			double ticksTaken[400] = { 0.0 };
 			unsigned int modo2_var;
+			Simulacion_t* simulation; 
+
+
 
 			for (modo2_var = 1; modo2_done == false; modo2_var++)
 			{
-				unsigned int i = 0;
-				Simulacion_t* simulation = createSim(modo2_var, height, width, modo);
+				unsigned int i=0;
+				Simulacion_t* simulation;
 				for (tickTemp = 0; i < 1000; i++)
 				{
+					simulation = createSim(modo2_var, height, width, modo);
 					if (simulation != NULL)
 					{
 						tickTemp += simulate(simulation);
@@ -73,26 +77,30 @@ int main(int argc, char** argv)
 					{
 						printf("Error en una simulacion\n");
 					}
+	//				freeSim(simulation);
 				}
-				freeSim(simulation);
 
 				ticksTaken[modo2_var - 1] = (tickTemp / 1000.0);	// Promedio de las 1000 simulaciones
 
-				if (modo2_var > 2)
+				if(modo2_var < 400)
 				{
-					if ((ticksTaken[modo2_var - 2] - ticksTaken[modo2_var - 1]) >= 0.1)
+					if (modo2_var > 2)
 					{
-						modo2_done = false;
-					}
-					else
-					{
-						modo2_done = true;
+						if ((ticksTaken[modo2_var - 2] >= 0.1 && ticksTaken[modo2_var - 1]) >= 0.1)
+						{
+							modo2_done = false;
+						}
 					}
 				}
+				else
+				{
+					modo2_done = true;
+				}
+
 			}
 			if (allegro_create(&allegro_interface, WIDTH_G, HEIGHT_G, modo))
 			{
-				allegro_graph(&ticksTaken[0], modo2_var, WIDTH_G, HEIGHT_G, &allegro_interface, width, height);
+				allegro_graph(&ticksTaken[0],modo2_var, WIDTH_G, HEIGHT_G, &allegro_interface, width, height);
 				allegro_wait4exit(&allegro_interface);
 				allegro_shut(&allegro_interface);
 

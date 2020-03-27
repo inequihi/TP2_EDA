@@ -5,6 +5,7 @@
 #ifndef SIMULACION_H
 #define SIMULACION_H
 #include "robot.h"
+#include "piso.h"
 
 /*******************************************************************************
  * ENUMERATIONS AND STRUCTURES AND TYPEDEFS
@@ -16,8 +17,9 @@
 typedef struct
 {
 	Robot_t* robs;
+    Baldosa_t* piso;
 	unsigned int robotCount;
-	Piso_t* piso;
+//	Piso_t* piso;
 	unsigned int tiempo;
 	unsigned int modo;
     unsigned int width;

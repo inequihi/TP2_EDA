@@ -15,7 +15,7 @@ using namespace std;
 						GLOBAL FUNCTION DEFINITIONS
  *******************************************************************************
  ******************************************************************************/
-Robot_t* createRobots(unsigned int count, unsigned int height, unsigned int width, Piso_t* p)
+Robot_t* createRobots(unsigned int count, unsigned int height, unsigned int width, Baldosa_t* p)
 {
 	unsigned int var_robots;
 	Robot_t* robs = (Robot_t *) malloc(count * sizeof(Robot_t));
@@ -44,25 +44,29 @@ Robot_t* createRobots(unsigned int count, unsigned int height, unsigned int widt
 			}
 
 			/* Limpio baldozas en donde arrancan los robots */
-			Baldosa_t* b = getBaldosa(p->baldosas_arr, floor(robs[var_robots].y), floor(robs[var_robots].x), width);
+			Baldosa_t* b = getBaldosa(p, floor(robs[var_robots].y), floor(robs[var_robots].x), width);
 			b->estado = LIMPIO;
 		}
 	}
-	else
+	/*
+		else
 	{
 		free(robs);
 		robs = NULL;
 	}
+	*/
+
 	return robs;
 }
 
-
+/*
 void freeRobots(Robot_t* robs)
 {
 	free(robs);
 }
+*/
 
-void moveRobot(Robot_t* moving_rob, unsigned int width, unsigned int height, Piso_t *p)
+void moveRobot(Robot_t* moving_rob, unsigned int width, unsigned int height, Baldosa_t *p)
 {
 	/*	|
 		X
@@ -92,7 +96,7 @@ void moveRobot(Robot_t* moving_rob, unsigned int width, unsigned int height, Pis
 	moving_rob->direccion = newDirection;
 
 	/* En el mismo movimiento del robot limpio la baldoza en la que caigo */
-	Baldosa_t* b = getBaldosa(p->baldosas_arr, floor(newY), floor(newX), width);
+	Baldosa_t* b = getBaldosa(p, floor(newY), floor(newX), width);
 	b->estado = LIMPIO;
 }
 
