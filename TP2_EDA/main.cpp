@@ -56,7 +56,7 @@ int main(int argc, char** argv)
 		else if (modo == MODO2)
 		{
 			bool modo2_done = false;
-			double ticksTaken[400] = { 0.0 };
+			double ticksTaken[200] = { 0.0 };
 			unsigned int modo2_var;
 			Simulacion_t* simulation = NULL; 
 
@@ -75,10 +75,9 @@ int main(int argc, char** argv)
 						printf("Error en una simulacion\n");
 					}
 				}
-
 				ticksTaken[modo2_var - 1] = (tickTemp / 1000.0);	// Promedio de las 1000 simulaciones
 
-				if(modo2_var < 400)
+				if(modo2_var < 200)
 				{
 					if (modo2_var > 2)
 					{
@@ -91,10 +90,12 @@ int main(int argc, char** argv)
 				else
 				{
 					modo2_done = true;
+					--modo2_var;
 				}
 			}
-
 			freeSim(simulation);
+
+
 
 			if (allegro_create(&allegro_interface, WIDTH_G, HEIGHT_G, modo))
 			{
