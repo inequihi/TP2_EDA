@@ -1,9 +1,5 @@
-#ifndef PROTO_H_
-#define PROTO_H_
-
-/*****************************************
-INCLUDE
-*****************************************/
+#ifndef INPUT_H_
+#define INPUT_H_
 
 #include <stdio.h>
 #include <ctype.h>
@@ -11,6 +7,9 @@ INCLUDE
 #include <stdlib.h>
 #include <iostream>
 
+/*******************************************************************************
+ * ENUMERATIONS AND STRUCTURES AND TYPEDEFS
+ ******************************************************************************/
 /*****************************************
 DEFINE
 *****************************************/
@@ -42,4 +41,4 @@ typedef struct {
 } user_t;
 
 
-#endif
+#endif // INPUT_H_

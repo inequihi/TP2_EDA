@@ -1,7 +1,7 @@
 #ifndef CALLBACK_H_
 #define CALLBACK_H_
 
-#include "prototipos.h"
+#include "input.h"
 /* parseCallback:
 1. Recibe:
 	- (char*) key: La clave de una opción. Si es NULL, es un parámetro.
@@ -14,9 +14,5 @@
 Se trabaja con la estructura de userData user_t, donde se guarda el valor del apellido, legajo o dni
 que se haya recibido en una unión keys_t, y un vector de parámetros.*/
 int parseCallback(char* key, char* value, user_t* userData);
-
-void lowerstring(char* s);								// Convierte a minúscula todas las mayúsculas de una palabra.
-
-int checkvalue(char* val, int keyid);                   //verifica que los valores recibidos sea adecuados según el key al que se encuentran asociados
 
 #endif

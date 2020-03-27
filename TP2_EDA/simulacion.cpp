@@ -1,8 +1,18 @@
+/*******************************************************************************
+ * INCLUDE HEADER FILES
+ ******************************************************************************/
 #include "simulacion.h"
 #include "piso.h"
 #include "allegro.h"
+#include "input.h"
+#include <math.h> 
 
 
+ /*******************************************************************************
+  *******************************************************************************
+						 GLOBAL FUNCTION DEFINITIONS
+  *******************************************************************************
+  ******************************************************************************/
 Simulacion_t* createSim(unsigned int count, unsigned int height, unsigned int width, unsigned int MODE)
 {
 	Simulacion_t* psim;
@@ -55,8 +65,8 @@ unsigned long int simulate(Simulacion_t* psim)
 		}
 		if ((psim->modo) == MODO1)
 		{
-			update_piso(psim);
-			print_piso(psim);
+			allegro_update_piso(psim);
+			allegro_print_piso(psim);
 		}
 		ticks++;
 	}

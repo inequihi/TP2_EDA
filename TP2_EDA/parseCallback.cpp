@@ -1,6 +1,29 @@
+/*******************************************************************************
+ * INCLUDE HEADER FILES
+ ******************************************************************************/
 #include "parseCallback.h"
 
+
+ /*******************************************************************************
+  * FUNCTION PROTOTYPES FOR PRIVATE FUNCTIONS WITH FILE LEVEL SCOPE
+  ******************************************************************************/
+void lowerstring(char* s);								// Convierte a minúscula todas las mayúsculas de una palabra.
+
+int checkvalue(char* val, int keyid);                   //verifica que los valores recibidos sea adecuados según el key al que se encuentran asociados
+
+
+/*******************************************************************************
+ * STATIC VARIABLES AND CONST VARIABLES WITH FILE LEVEL SCOPE
+ ******************************************************************************/
 char validKeys[][MAXKEYLENGTH] = { "robots","modo","ancho","alto" };
+
+
+ /*******************************************************************************
+  *******************************************************************************
+                         GLOBAL FUNCTION DEFINITIONS
+  *******************************************************************************
+  ******************************************************************************/
+
 int parseCallback(char* key, char* value, user_t* userData)
 {
     int keyid;                  //keyid identifica al tipo de key
@@ -49,6 +72,13 @@ int parseCallback(char* key, char* value, user_t* userData)
 
     return res;
 }
+
+/*******************************************************************************
+ *******************************************************************************
+                        LOCAL FUNCTION DEFINITIONS
+ *******************************************************************************
+ ******************************************************************************/
+
 
 int checkvalue(char* val, int keyid)                    //verifica que los valores recibidos sea adecuados según el key al que se encuentran asociados
 {                                                       //la verificación depende de keyid

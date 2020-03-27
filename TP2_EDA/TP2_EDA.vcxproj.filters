@@ -15,26 +15,26 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="robot.cpp">
-      <Filter>Resource Files</Filter>
-    </ClCompile>
-    <ClCompile Include="piso.cpp">
-      <Filter>Resource Files</Filter>
-    </ClCompile>
-    <ClCompile Include="simulacion.cpp">
-      <Filter>Resource Files</Filter>
+    <ClCompile Include="allegro.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
-      <Filter>Resource Files</Filter>
-    </ClCompile>
-    <ClCompile Include="allegro.cpp">
-      <Filter>Resource Files</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="parseCallback.cpp">
-      <Filter>Resource Files</Filter>
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="piso.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="simulacion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="robot.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="parseCmd.cpp">
-      <Filter>Resource Files</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -56,7 +56,7 @@
     <ClInclude Include="parseCmd.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="prototipos.h">
+    <ClInclude Include="input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

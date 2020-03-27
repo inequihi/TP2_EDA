@@ -1,8 +1,11 @@
+/*******************************************************************************
+ * INCLUDE HEADER FILES
+ ******************************************************************************/
 #include "piso.h"
 #include "simulacion.h"
 #include "allegro.h"
 #include "parseCmd.h"
-#include "prototipos.h"
+#include "input.h"
 #include "parseCallback.h"
 #include "robot.h"
 #include <stdlib.h>
@@ -38,18 +41,13 @@ int main(int argc, char** argv)
 		else if (modo == MODO1)
 		{
 			Simulacion_t* simulation = createSim(robot_count, height, width, modo);
-		
-
 			if (allegro_create(&allegro_interface, width, height, modo))
 			{
-
 				tickTemp = simulate(simulation);
-
 				allegro_results(tickTemp, &allegro_interface);
 				allegro_wait4exit(&allegro_interface);
 				freeSim(simulation);
 				allegro_shut(&allegro_interface);
-
 			}
 			else
 				printf("ERROR CREANDO ALLEGRO");
@@ -60,7 +58,6 @@ int main(int argc, char** argv)
 			bool modo2_done = false;
 			double ticksTaken[400] = { 0.0 };
 			unsigned int modo2_var;
-
 
 			for (modo2_var = 1; modo2_done == false; modo2_var++)
 			{
@@ -95,7 +92,7 @@ int main(int argc, char** argv)
 			}
 			if (allegro_create(&allegro_interface, WIDTH_G, HEIGHT_G, modo))
 			{
-				graph(&ticksTaken[0], modo2_var, WIDTH_G, HEIGHT_G, &allegro_interface, width, height);
+				allegro_graph(&ticksTaken[0], modo2_var, WIDTH_G, HEIGHT_G, &allegro_interface, width, height);
 				allegro_wait4exit(&allegro_interface);
 				allegro_shut(&allegro_interface);
 

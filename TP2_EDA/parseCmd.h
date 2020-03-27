@@ -1,10 +1,18 @@
 #ifndef PARSECMD_H_
 #define PARSECMD_H_
 
-#include "prototipos.h"
+#include "input.h"
+
+/*******************************************************************************
+ * ENUMERATIONS AND STRUCTURES AND TYPEDEFS
+ ******************************************************************************/
 
 typedef int (*pCallback) (char*, char*, user_t*);
 
+
+/*******************************************************************************
+ * FUNCTION PROTOTYPES WITH GLOBAL SCOPE
+ ******************************************************************************/
 
 /*parseCmdLine:
 1. Recibe:

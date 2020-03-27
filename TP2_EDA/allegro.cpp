@@ -1,7 +1,22 @@
+/*******************************************************************************
+ * INCLUDE HEADER FILES
+ ******************************************************************************/
 #include "allegro.h"
 #include "piso.h"
 #include "robot.h"
 
+
+ /*******************************************************************************
+  * LOCAL FUNCTION PROTOTYPES
+  ******************************************************************************/
+ALLEGRO_FONT* set_font(unsigned int size);
+
+
+ /*******************************************************************************
+  *******************************************************************************
+						 GLOBAL FUNCTION DEFINITIONS
+  *******************************************************************************
+  ******************************************************************************/
 void allegro_interface_init(allegro_t* allegro_interface)
 {
 		allegro_interface->font = NULL;
@@ -84,7 +99,7 @@ void allegro_shut(allegro_t * allegro_interface)
 	al_shutdown_ttf_addon();
 }
 
-void update_piso(Simulacion_t* psim)
+void allegro_update_piso(Simulacion_t* psim)
 {
 	al_flip_display();
 	unsigned int dimension;
@@ -100,7 +115,7 @@ void update_piso(Simulacion_t* psim)
 	}
 }
 
-void print_piso(Simulacion_t* psim)
+void allegro_print_piso(Simulacion_t* psim)
 {
 	// IMPRIMIMOS BALDOSAS
 	unsigned int i, col = 0;
@@ -128,7 +143,7 @@ void print_piso(Simulacion_t* psim)
 }
 
 
-void graph(double* array, unsigned int max, unsigned int width, unsigned int height, allegro_t* allegro_interface, unsigned int width2, unsigned int height2)
+void allegro_graph(double* array, unsigned int max, unsigned int width, unsigned int height, allegro_t* allegro_interface, unsigned int width2, unsigned int height2)
 //Funcion que recibe un arreglo con los 1000 variaciones para robots y el tic correspondiente a cada uno. Estructura se encuentra en simulacion.h
 {
 	al_clear_to_color(al_map_rgb(255, 255, 255));
@@ -136,13 +151,13 @@ void graph(double* array, unsigned int max, unsigned int width, unsigned int hei
 	int axis_size_x = height * 0.80;
 
 	//x axis
-	al_draw_line(0.1 * width, 0.9 * height, 0.95 * width, 0.9 * height, al_map_rgb(0, 0, 0), 4);
+	al_draw_line(0.1 * width, 0.9 * height, 0.95 * width, 0.9 * height, al_map_rgb(0, 0, 0), 6);
 	al_draw_filled_triangle(0.96 * width, 0.9 * height, 0.93 * width, 0.91 * height, 0.93 * width, 0.89 * height, al_map_rgb(0, 0, 0));
 
 
 	//y axis
 	unsigned int graph_var;
-	al_draw_line(0.1 * width, 0.9 * height, 0.1 * width, 0.05 * height, al_map_rgb(255, 0, 0), 4);			
+	al_draw_line(0.1 * width, 0.9 * height, 0.1 * width, 0.05 * height, al_map_rgb(255, 0, 0), 6);			
 	al_draw_filled_triangle(0.1 * width, 0.04 * height, 0.09 * width, 0.09 * height, 0.11 * width, 0.09 * height, al_map_rgb(255, 0, 0));
 
 	//labels
@@ -154,22 +169,22 @@ void graph(double* array, unsigned int max, unsigned int width, unsigned int hei
 	al_destroy_font(allegro_interface->font);
 
 	allegro_interface->font = set_font(25);
+	al_draw_textf(allegro_interface->font, al_map_rgb(0, 0, 0), 0.4 * width, 0.095 * height, 0, "PRESIONE 'ESC' PARA SALIR");
 	al_draw_textf(allegro_interface->font, al_map_rgb(0, 0, 0), width * 0.1, height * 0.92, ALLEGRO_ALIGN_CENTRE, "%u", 0);
 	al_draw_textf(allegro_interface->font, al_map_rgb(0, 0, 0), width * 0.5, height * 0.92, ALLEGRO_ALIGN_CENTER, "%u", max / 2);
 	al_draw_textf(allegro_interface->font, al_map_rgb(0, 0, 0), width * 0.9, height * 0.92, ALLEGRO_ALIGN_CENTER, "%u", max);
-
-	//Imprimir barras
-	double escala_x = (0.9 * width - 0.1 * width) / max;
-	double escala_y = (double)((0.8 * height - 0.1 * height) / array[0]);   //Divido tamaño del eje y entre el maximo valor de ticks
-
 	al_draw_textf(allegro_interface->font, al_map_rgb(255, 0, 0), width * 0.075, height * 0.87, ALLEGRO_ALIGN_CENTER, "%.1f", 0.0);
-	al_draw_textf(allegro_interface->font, al_map_rgb(255, 0, 0), width * 0.075, height * 0.45, ALLEGRO_ALIGN_CENTER, "%.1f", array[max/2]);
+	al_draw_textf(allegro_interface->font, al_map_rgb(255, 0, 0), width * 0.075, height * 0.45, ALLEGRO_ALIGN_CENTER, "%.1f", array[max / 2]);
 	al_draw_textf(allegro_interface->font, al_map_rgb(255, 0, 0), width * 0.075, height * 0.1, ALLEGRO_ALIGN_CENTER, "%.1f", array[0]);
 	al_destroy_font(allegro_interface->font);
 
+	//Imprimir barras
+	double escala_x = (0.9 * width - 0.1 * width) / max;			//Divido tamaño de eje x entre la cantidad de barras a colocar
+	double escala_y = (double)((0.8 * height - 0.1 * height) / array[0]);   //Divido tamaño del eje y entre el maximo valor de ticks
+
 	for (graph_var = 0; graph_var < max; graph_var++)
 	{
-		al_draw_line(0.1 * width + (((double)graph_var) + 1) * escala_x, 0.9 * height, 0.1 * width + (((double)graph_var + 1) * escala_x), 0.8*height - ((array[graph_var])*escala_y) , al_map_rgb(0, 0,0), 3);			
+		al_draw_line(0.1 * width + (((double)graph_var) + 1) * escala_x, 0.9 * height, 0.1 * width + (((double)graph_var + 1) * escala_x), 0.8*height - ((array[graph_var])*escala_y) , al_map_rgb(0, 0,0),30);			
 	}
 	al_flip_display();
 
@@ -186,7 +201,7 @@ void allegro_wait4exit(allegro_t* allegro_interface)
 	} while (ev.type == ALLEGRO_EVENT_KEY_DOWN && ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE);
 }
 
-void allegro_results(double ticksTotal, allegro_t* allegro_interface)
+void allegro_results(double ticksTotal, allegro_t* allegro_interface)	//Mostrar ticks totales a usuario al finalizar modo1
 {
 
 	al_resize_display(allegro_interface->user_display, 700, 700);
@@ -204,12 +219,18 @@ void allegro_results(double ticksTotal, allegro_t* allegro_interface)
 	al_destroy_font(allegro_interface->font);
 	
 	allegro_interface->font = set_font(25);
-	al_draw_textf(allegro_interface->font, al_map_rgb(0, 0, 0), 0.5 * width, 0.2 * height, ALLEGRO_ALIGN_CENTER, "PRESIONE 'ESC' PARA SALIR SIMULACION");
+	al_draw_textf(allegro_interface->font, al_map_rgb(0, 0, 0), 0.5 * width, 0.2 * height, ALLEGRO_ALIGN_CENTER, "PRESIONE 'ESC' PARA SALIR");
 	al_destroy_font(allegro_interface->font);
 
 	al_flip_display();
 }
 
+
+/*******************************************************************************
+ *******************************************************************************
+						LOCAL FUNCTION DEFINITIONS
+ *******************************************************************************
+ ******************************************************************************/
 ALLEGRO_FONT* set_font(unsigned int size)
 {
 	return al_load_ttf_font(COMICSANS, size, 0);

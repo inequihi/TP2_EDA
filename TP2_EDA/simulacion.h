@@ -4,21 +4,15 @@
 
 #ifndef SIMULACION_H
 #define SIMULACION_H
-
 #include "robot.h"
-#include "piso.h"
-#include "prototipos.h"
-#include <math.h> 
 
 /*******************************************************************************
  * ENUMERATIONS AND STRUCTURES AND TYPEDEFS
  ******************************************************************************/
-
 #define MODO1 1
 #define MODO2 2
 #define MAX_SIMULATIONS 1000
 
-//SIMULACION
 typedef struct
 {
 	Robot_t* robs;
