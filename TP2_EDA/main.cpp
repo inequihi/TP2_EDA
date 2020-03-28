@@ -14,7 +14,6 @@ Modo 2: Ingresar alto y ancho del piso, se obtendra un grafico con los movimient
 		totales necesarios que haran n robots para limpiarlo. Muestra valores de 
 		n-robots hasta que el tiempo medio entre los timepos de los robots sea menor a 0,1.
 */
-
  /*******************************************************************************
  * INCLUDE HEADER FILES
  ******************************************************************************/
