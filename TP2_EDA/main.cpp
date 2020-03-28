@@ -15,7 +15,6 @@ Modo 2: Ingresar alto y ancho del piso, se obtendra un grafico con los movimient
 		n-robots hasta que el tiempo medio entre los timepos de los robots sea menor a 0,1.
 */
 
- 
  /*******************************************************************************
  * INCLUDE HEADER FILES
  ******************************************************************************/
@@ -99,7 +98,7 @@ int main(int argc, char** argv)
 						printf("Error en una simulacion\n");
 					}
 				}
-				ticksTaken[modo2_var - 1] = (tickTemp2 / 1000.0);	// Promedio de las 1000 simulaciones
+				ticksTaken[modo2_var - 1] = (tickTemp2 / MAX_SIMULATIONS);	// Promedio de las 1000 simulaciones
 				freeSim(simulation);
 
 				if (modo2_var < 350)

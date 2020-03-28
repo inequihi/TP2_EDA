@@ -18,7 +18,7 @@
  ******************************************************************************/
 #define MODO1 1
 #define MODO2 2
-#define MAX_SIMULATIONS 1000
+#define MAX_SIMULATIONS 1000.0
 
 #define MAXKEYLENGTH 15
 #define MAXLENGTH 20
