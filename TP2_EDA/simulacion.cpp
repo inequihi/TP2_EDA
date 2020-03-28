@@ -19,7 +19,6 @@ Simulacion_t* createSim(unsigned int count, unsigned int height, unsigned int wi
 	psim = (Simulacion_t*)malloc(sizeof(Simulacion_t));
 	if (psim != NULL)
 	{
-		psim->piso = nullptr;
 //		psim->piso = (Piso_t*)malloc(sizeof(Piso_t));
 		Baldosa_t * piso = createFloor(height, width);
 		if (piso != NULL)
@@ -47,21 +46,9 @@ Simulacion_t* createSim(unsigned int count, unsigned int height, unsigned int wi
 
 void freeSim(Simulacion_t* psim)
 {
-	if(psim->robs)
-	{
-		free(psim->robs);
-		psim->robs = nullptr;
-	}
-	if (psim->piso)
-	{
-		free(psim->piso);
-		psim->piso = nullptr;
-	}
-	if (psim)
-	{
-		free(psim);
-		psim = nullptr;
-	}
+	free(psim->piso);
+	free(psim->robs);
+	free(psim);
 }
 
 unsigned long int simulate(Simulacion_t* psim)
