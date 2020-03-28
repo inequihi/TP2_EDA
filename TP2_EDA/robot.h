@@ -16,14 +16,11 @@ typedef struct
 	int direccion;
 }Robot_t;
 
-
 /*******************************************************************************
  * FUNCTION PROTOTYPES WITH GLOBAL SCOPE
  ******************************************************************************/
 
 Robot_t* createRobots(unsigned int count, unsigned int height, unsigned int width, Baldosa_t* p);
-
-//void freeRobots(Robot_t* frobots);
 
 void moveRobot(Robot_t* moving_rob, unsigned int width, unsigned int height, Baldosa_t* p);
 

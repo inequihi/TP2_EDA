@@ -60,11 +60,11 @@ int parseCallback(char* key, char* value, user_t* userData)
 
             case (ANCHO):
                 if (res)
-                    userData->alto = atoi(value);
+                    userData->ancho = atoi(value);
                 break;
             case(ALTO):
                 if (res)
-                    userData->ancho = atoi(value);
+                    userData->alto = atoi(value);
                 break;
             }
         }
@@ -102,7 +102,7 @@ int checkvalue(char* val, int keyid)                    //verifica que los valor
             }
             i++;
         }
-        if ((atoi(val))> MAXALTO) 
+        if ((atoi(val))> MAXALTO || (atoi(val) == 0))
         {
             let = ERROR;
             break;
@@ -119,17 +119,12 @@ int checkvalue(char* val, int keyid)                    //verifica que los valor
             }
             i++;
         }
-        if ((atoi(val)) > MAXANCHO)
+        if ((atoi(val) > MAXANCHO) || (atoi(val)== 0) )
         {
             let = ERROR;
             break;
         }
 
-        if (i > MAXANCHO)
-        {
-            let = ERROR;
-            break;
-        }
         break;
 
     case(ROBOTS):

@@ -56,9 +56,6 @@
     <ClInclude Include="parseCmd.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="input.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Font Include="comici.ttf">

@@ -48,23 +48,8 @@ Robot_t* createRobots(unsigned int count, unsigned int height, unsigned int widt
 			b->estado = LIMPIO;
 		}
 	}
-	/*
-		else
-	{
-		free(robs);
-		robs = NULL;
-	}
-	*/
-
 	return robs;
 }
-
-/*
-void freeRobots(Robot_t* robs)
-{
-	free(robs);
-}
-*/
 
 void moveRobot(Robot_t* moving_rob, unsigned int width, unsigned int height, Baldosa_t *p)
 {

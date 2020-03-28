@@ -1,7 +1,7 @@
 #ifndef CALLBACK_H_
 #define CALLBACK_H_
 
-#include "input.h"
+#include "simulacion.h"
 /* parseCallback:
 1. Recibe:
 	- (char*) key: La clave de una opción. Si es NULL, es un parámetro.

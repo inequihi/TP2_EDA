@@ -4,7 +4,6 @@
 #include "simulacion.h"
 #include "piso.h"
 #include "allegro.h"
-#include "input.h"
 #include <math.h> 
 
 
@@ -19,7 +18,6 @@ Simulacion_t* createSim(unsigned int count, unsigned int height, unsigned int wi
 	psim = (Simulacion_t*)malloc(sizeof(Simulacion_t));
 	if (psim != NULL)
 	{
-//		psim->piso = (Piso_t*)malloc(sizeof(Piso_t));
 		Baldosa_t * piso = createFloor(height, width);
 		if (piso != NULL)
 		{

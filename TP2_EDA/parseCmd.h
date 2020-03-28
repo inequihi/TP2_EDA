@@ -1,7 +1,7 @@
 #ifndef PARSECMD_H_
 #define PARSECMD_H_
 
-#include "input.h"
+#include "simulacion.h"
 
 /*******************************************************************************
  * ENUMERATIONS AND STRUCTURES AND TYPEDEFS

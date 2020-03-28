@@ -41,6 +41,7 @@ bool allegro_create(allegro_t* allegro_interface, unsigned int width, unsigned i
 				allegro_interface->user_display = al_create_display(width, height);
 				break; 
 		}
+	al_set_window_position(allegro_interface->user_display, 0, 0);
 
 		if (!allegro_interface->user_display)
 		{
@@ -89,8 +90,6 @@ bool allegro_init(allegro_t *allegro_interface)
 
 void allegro_shut(allegro_t * allegro_interface)
 {
-	
-	
 	al_shutdown_font_addon();
 	al_shutdown_primitives_addon();
 	al_destroy_display(allegro_interface->user_display);
@@ -102,14 +101,16 @@ void allegro_shut(allegro_t * allegro_interface)
 void allegro_update_piso(Simulacion_t* psim)
 {
 	al_flip_display();
-	unsigned int dimension;
-	if ((psim->robotCount) < 50)
+	unsigned int dimension = (psim->height) * (psim->width);
+
+	if (((psim->robotCount) < 70) || (dimension < 800))
 	{
-		dimension = (psim->height) * (psim->width);
 		if (dimension < 1200 && dimension >= 800)
-			al_rest(1 / MAXFPS);
-		else if (dimension < 800 && dimension >= 200)
+			al_rest(MAXFPS);
+		else if (dimension < 800 && dimension >= 600)
 			al_rest(FPS);
+		else if (dimension < 600 && dimension >= 200)
+			al_rest(FPS2);
 		else if (dimension < 400)
 			al_rest(MINFPS);
 	}
@@ -184,10 +185,11 @@ void allegro_graph(double* array,unsigned int max, unsigned int width, unsigned 
 	//Imprimir barras
 	double escala_x = (0.9 * width - 0.1 * width) / max;			//Divido tamaño de eje x entre la cantidad de barras a colocar
 	double escala_y = (double)((0.8 * height - 0.1 * height) / array[0]);   //Divido tamaño del eje y entre el maximo valor de ticks
-
 	for (graph_var = 0; graph_var < max; graph_var++)
 	{
-		al_draw_line(0.1 * width + (((double)graph_var) + 1) * escala_x, 0.9 * height, 0.1 * width + (((double)graph_var + 1) * escala_x), 0.8*height - ((array[graph_var])*escala_y) , al_map_rgb(0, 0,0),5);			
+		al_draw_line(0.1 * width + (((double)graph_var) + 1) * escala_x, 0.9 * height, 0.1 * width + (((double)graph_var + 1) * escala_x), 
+									0.8*height - ((array[graph_var])*escala_y) , 
+									al_map_rgb(0, 0,0),30);			
 	}
 	al_flip_display();
 
@@ -206,13 +208,14 @@ void allegro_wait4exit(allegro_t* allegro_interface)
 
 void allegro_results(double ticksTotal, allegro_t* allegro_interface)	//Mostrar ticks totales a usuario al finalizar modo1
 {
-
+	//Diseñamos tamaño y color de nuevo display para resultados
 	al_resize_display(allegro_interface->user_display, 700, 700);
 	al_clear_to_color(al_map_rgb(0, 255, 255));
 	int width, height;
 	width = al_get_display_width(allegro_interface->user_display);
 	height = al_get_display_height(allegro_interface->user_display);
 
+	//Escribimos
 	allegro_interface->font = set_font(60);
 	al_draw_textf(allegro_interface->font, al_map_rgb(0, 0, 0), 0.5 * width, 0.3 * height, ALLEGRO_ALIGN_CENTER, "TOTAL TICKS");
 	al_destroy_font(allegro_interface->font);
@@ -226,6 +229,8 @@ void allegro_results(double ticksTotal, allegro_t* allegro_interface)	//Mostrar 
 	al_destroy_font(allegro_interface->font);
 
 	al_flip_display();
+
+	allegro_wait4exit(allegro_interface);								//Funcion para esperar a que se presione x y sacar los resultados
 }
 
 

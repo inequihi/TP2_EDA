@@ -15,7 +15,7 @@
 Baldosa_t* createFloor(unsigned int height, unsigned int width)
 {
 	unsigned long int  var_piso;
-	Baldosa_t* baldosa_array = (Baldosa_t*) malloc(height *  sizeof(Baldosa_t)* width);
+	Baldosa_t* baldosa_array = (Baldosa_t*) malloc(sizeof(Baldosa_t)*((height)+1)*(width+1));		//Multiplicamos size of balosa por el maximo valor de baldosas posibles
 	if (baldosa_array != NULL)
 	{
 		for (var_piso = 0; var_piso < (height * width); var_piso++)
@@ -39,15 +39,9 @@ bool floorIsClean(Baldosa_t * p,unsigned int width,unsigned int height) {
 	}
 	return state;
 }
+
+
 Baldosa_t* getBaldosa(Baldosa_t* pbald, unsigned int col, unsigned int fil, unsigned int width)
 {
 	return &pbald[(fil) + (col*width)];
 }
-
-/*
-void freeFloor(Simulacion_t* p)
-{
-	free(p->piso);
-}
-*/
-

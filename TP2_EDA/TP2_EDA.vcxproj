@@ -179,7 +179,6 @@
     <ClInclude Include="ParseCallback.h" />
     <ClInclude Include="parseCmd.h" />
     <ClInclude Include="piso.h" />
-    <ClInclude Include="input.h" />
     <ClInclude Include="simulacion.h" />
     <ClInclude Include="robot.h" />
   </ItemGroup>
