@@ -69,6 +69,7 @@ int main(int argc, char** argv)
 					if (simulation != NULL)
 					{
 						tickTemp += simulate(simulation);
+						freeSim(simulation);
 					}
 					else
 					{
@@ -93,7 +94,7 @@ int main(int argc, char** argv)
 					--modo2_var;
 				}
 			}
-			freeSim(simulation);
+			
 
 
 
