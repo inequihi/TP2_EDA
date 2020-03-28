@@ -47,7 +47,6 @@ Simulacion_t* createSim(unsigned int count, unsigned int height, unsigned int wi
 void freeSim(Simulacion_t* psim)
 {
 	free(psim->piso);
-//	free(psim->piso);
 	free(psim->robs);
 	free(psim);
 }
