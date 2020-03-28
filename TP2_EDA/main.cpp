@@ -63,20 +63,22 @@ int main(int argc, char** argv)
 			for (modo2_var = 1; modo2_done == false; modo2_var++)
 			{
 				unsigned int i = 0;
-				for(tickTemp = 0; i < 1000; i++)
+				for(tickTemp = 0; i < 100; i++)
 				{
 					simulation = createSim(modo2_var, height, width, modo);
 					if (simulation != NULL)
 					{
 						tickTemp += simulate(simulation);
+						freeSim(simulation);
 					}
 					else
 					{
 						printf("Error en una simulacion\n");
 					}
+					
 				}
 
-				ticksTaken[modo2_var - 1] = (tickTemp / 1000.0);	// Promedio de las 1000 simulaciones
+				ticksTaken[modo2_var - 1] = (tickTemp / 100.0);	// Promedio de las 1000 simulaciones
 
 				if(modo2_var < 400)
 				{
@@ -94,7 +96,7 @@ int main(int argc, char** argv)
 				}
 			}
 
-			freeSim(simulation);
+			
 
 			if (allegro_create(&allegro_interface, WIDTH_G, HEIGHT_G, modo))
 			{
